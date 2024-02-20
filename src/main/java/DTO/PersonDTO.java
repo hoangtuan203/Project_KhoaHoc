@@ -1,4 +1,4 @@
-package DTO;
+package com.mycompany.course.DTO;
 
 import java.sql.Date;
 

@@ -74,3 +74,4 @@ public class DepartmentDTO
         this.Admin = Admin;
     }
 }
+
