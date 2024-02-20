@@ -48,7 +48,18 @@ public class DatabaseConnect {
         }
         return rs;
     }
-
+     public static void closeConnection() {
+        try {
+            if (s != null) {
+                s.close();
+            }
+            if (c != null) {
+                c.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseConnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
 
     //test connection
