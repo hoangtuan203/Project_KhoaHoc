@@ -97,5 +97,33 @@ public class CourseInstructorDAL {
             DatabaseConnect.closeConnection();
         }
     }
+    
+    public static String getPersonNameById(int personId) {
+        String personName = null;
+        Connection connection = DatabaseConnect.getConnection();
+
+        try {
+            String sql = "SELECT FirstName, LastName FROM Person WHERE PersonID = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, personId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                // Assuming "FirstName" and "LastName" are the columns in your database table
+                String firstName = resultSet.getString("FirstName");
+                String lastName = resultSet.getString("LastName");
+                
+                // Concatenate first and last names
+                personName = firstName + " " + lastName;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            DatabaseConnect.closeConnection();
+        }
+
+        return personName;
+    }
 }
 
