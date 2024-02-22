@@ -10,15 +10,16 @@ public class CourseInstructorBUS {
         return CourseInstructorDAL.getAllCourseInstructors();
     }
     
-    public static void addCourseInstructor(CourseInstructorDTO courseInstructor) {
-        CourseInstructorDAL.addCourseInstructor(courseInstructor);
-    }
-    
     public static void updateCourseInstructor(CourseInstructorDTO courseInstructor) {
         CourseInstructorDAL.updateCourseInstructor(courseInstructor);
     }
     
-    public static void deleteCourseInstructor(int instructorId) {
-        CourseInstructorDAL.deleteCourseInstructor(instructorId);
+
+    public static String getPersonNameById(int personId) {
+        return CourseInstructorDAL.getPersonNameById(personId);
+    }
+    
+    public static String getTitleById(int courseId) {
+        return CourseInstructorDAL.getTitleById(courseId);
     }
 }
