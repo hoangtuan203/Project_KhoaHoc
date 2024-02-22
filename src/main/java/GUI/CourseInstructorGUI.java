@@ -125,9 +125,17 @@ public class CourseInstructorGUI extends javax.swing.JFrame {
                 {null, null}
             },
             new String [] {
-                "Title 1", "Title 2"
+                "Course", "Person"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -172,22 +180,28 @@ public class CourseInstructorGUI extends javax.swing.JFrame {
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
+        jTabbedPane2.getAccessibleContext().setAccessibleName("Phân công giảng dạy");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLuuActionPerformed
-    private void displayCourseInstructors() {
-        List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getAllCourseInstructors();
-        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        model.setRowCount(0);
+   private void displayCourseInstructors() {
+    List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getAllCourseInstructors();
+    DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+    model.setRowCount(0);
 
-        for (CourseInstructorDTO courseInstructor : courseInstructors) {
-            Object[] row = {courseInstructor.getPersonID(), courseInstructor.getCourseID()};
-            model.addRow(row);
-        }
+    for (CourseInstructorDTO courseInstructor : courseInstructors) {
+        Object[] row = {
+            CourseInstructorBUS.getTitleById(courseInstructor.getCourseID()),
+            CourseInstructorBUS.getPersonNameById(courseInstructor.getPersonID())
+        };
+        model.addRow(row);
     }
+}
+
     /**
      * @param args the command line arguments
      */
@@ -219,8 +233,7 @@ public class CourseInstructorGUI extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    UIManager.setLookAndFeel(
-                            UIManager.getSystemLookAndFeelClassName());
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(HomeGUI.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (InstantiationException ex) {
