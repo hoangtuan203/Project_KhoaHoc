@@ -1,5 +1,5 @@
 
-package com.mycompany.course.DAL;
+package DAL;
 
 /**
  *
