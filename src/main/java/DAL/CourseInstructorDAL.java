@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.course.DAL;
+package DAL;
 
 import DAL.DatabaseConnect;
 import com.mycompany.course.DTO.CourseInstructorDTO;
@@ -15,8 +15,11 @@ import java.util.List;
 
 public class CourseInstructorDAL {
 
+ 
+    
     public static List<CourseInstructorDTO> getAllCourseInstructors() {
         List<CourseInstructorDTO> courseInstructors = new ArrayList<>();
+         DatabaseConnect.connectDB();
         Connection connection = DatabaseConnect.getConnection();
 
         try {
@@ -34,12 +37,61 @@ public class CourseInstructorDAL {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } 
-
+        DatabaseConnect.closeConnection();
         return courseInstructors;
     }
 
+    public static List<String> getAllPersonName() {
+            List<String> PersonName = new ArrayList<>();
+            DatabaseConnect.connectDB();
+            Connection connection = DatabaseConnect.getConnection();
+
+            try {
+                String sql = "SELECT Lastname,Firstname FROM Person Where HireDate>0";
+                ResultSet rs = DatabaseConnect.doReadQuery(sql);
+
+                while (rs.next()) {
+ 
+                       String firstName = rs.getString("Firstname");
+                        String lastName = rs.getString("Lastname");
+                        String fullname=firstName+ ' ' +lastName;
+
+         
+                    PersonName.add(fullname);
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } 
+            DatabaseConnect.closeConnection();
+            return PersonName;
+        }
+        public static List<String> getAllTitleCourse() {
+            List<String> TitleCourse = new ArrayList<>();
+            DatabaseConnect.connectDB();
+            Connection connection = DatabaseConnect.getConnection();
+
+            try {
+                String sql = "SELECT Title FROM Course";
+                ResultSet rs = DatabaseConnect.doReadQuery(sql);
+
+                while (rs.next()) {
+                       String Titlecourse = rs.getString("Title");
+
+
+                    // Tạo đối tượng CourseInstructor và thêm vào danh sác
+
+                    TitleCourse.add(Titlecourse);
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } 
+            DatabaseConnect.closeConnection();
+            return TitleCourse;
+        }
     public static void updateCourseInstructor(CourseInstructorDTO courseInstructor) {
+        
         Connection connection = DatabaseConnect.getConnection();
+        
 
         try {
             String sql = "UPDATE CourseInstructor SET courseId = ? WHERE instructorId = ?";
@@ -58,6 +110,7 @@ public class CourseInstructorDAL {
 
     public static String getPersonNameById(int personId) {
         String personName = null;
+        DatabaseConnect.connectDB();
         Connection connection = DatabaseConnect.getConnection();
 
         try {
@@ -105,4 +158,5 @@ public class CourseInstructorDAL {
 
         return title;
     }
+  
 }
