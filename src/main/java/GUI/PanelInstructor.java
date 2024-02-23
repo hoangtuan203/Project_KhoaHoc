@@ -4,11 +4,23 @@
  */
 package GUI;
 
+<<<<<<< HEAD
 import BUS.CourseInstructorBUS;
 import com.mycompany.course.DTO.CourseInstructorDTO;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
+=======
+import DAL.DatabaseConnect;
+import com.mycompany.course.BLL.CourseInstructorBUS;
+import com.mycompany.course.DTO.CourseInstructorDTO;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
+>>>>>>> 4b85a25a1c9678371af3e104ca91ea9c4aeed302
 /**
  *
  * @author ASUS
@@ -20,9 +32,14 @@ public class PanelInstructor extends javax.swing.JPanel {
      */
     public PanelInstructor() {
         initComponents();
+<<<<<<< HEAD
         //displayCourseInstructors();
         fillcbxnameperson();
         fillcbxcourseinstructor();
+=======
+        DatabaseConnect.connectDB();
+        displayCourseInstructors();
+>>>>>>> 4b85a25a1c9678371af3e104ca91ea9c4aeed302
     }
 
     /**
@@ -184,6 +201,7 @@ public class PanelInstructor extends javax.swing.JPanel {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
+<<<<<<< HEAD
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
@@ -238,6 +256,18 @@ public class PanelInstructor extends javax.swing.JPanel {
         };
         model.addRow(row);
     }
+=======
+    }//GEN-LAST:event_btnLuuActionPerformed
+    private void displayCourseInstructors() {
+        List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getAllCourseInstructors();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+         int stt = 1; 
+        for (CourseInstructorDTO courseInstructor : courseInstructors) {
+            Object[] row = {stt++,courseInstructor.getPersonID(), courseInstructor.getCourseID()};
+            model.addRow(row);
+        }
+>>>>>>> 4b85a25a1c9678371af3e104ca91ea9c4aeed302
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
