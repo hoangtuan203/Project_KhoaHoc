@@ -1,6 +1,6 @@
-package com.mycompany.course.BLL;
+package BUS;
 
-import com.mycompany.course.DAL.CourseInstructorDAL;
+import DAL.CourseInstructorDAL;
 import com.mycompany.course.DTO.CourseInstructorDTO;
 import java.util.List;
 
@@ -22,4 +22,11 @@ public class CourseInstructorBUS {
     public static String getTitleById(int courseId) {
         return CourseInstructorDAL.getTitleById(courseId);
     }
+    public static List<String>getAllPersonName() {
+        return CourseInstructorDAL.getAllPersonName();
+    }
+    public static List<String>getAllTitleCourse() {
+        return CourseInstructorDAL.getAllTitleCourse();
+    }
+    
 }

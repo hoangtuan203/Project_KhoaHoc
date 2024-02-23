@@ -27,6 +27,9 @@ public class CourseInstructorGUI extends javax.swing.JFrame {
         initComponents();
         DatabaseConnect.connectDB();
         displayCourseInstructors();
+        fillcbxcourseinstructor();
+        fillcbxnameperson();
+        
     }
 
     /**
@@ -61,10 +64,8 @@ public class CourseInstructorGUI extends javax.swing.JFrame {
         jLabel8.setText("Khóa");
 
         cbxnamegv.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cbxnamegv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         cbxtitlecourse.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cbxtitlecourse.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnLuu.setText("Lưu");
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
@@ -186,7 +187,19 @@ public class CourseInstructorGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void fillcbxcourseinstructor()
     {
-        List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getAllCourseInstructors();
+        List<String> titlecouse = CourseInstructorBUS.getAllTitleCourse();
+        for(String title : titlecouse)
+        {
+            cbxtitlecourse.addItem(title);
+        }
+    }
+    private void fillcbxnameperson()
+    {
+        List<String> NamePerson = CourseInstructorBUS.getAllPersonName();
+        for(String name : NamePerson)
+        {
+            cbxtitlecourse.addItem(name);
+        }
     }
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
