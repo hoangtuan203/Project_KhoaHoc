@@ -23,7 +23,7 @@ public class CourseInstructorDAL {
         Connection connection = DatabaseConnect.getConnection();
 
         try {
-            String sql = "SELECT * FROM CourseInstructor";
+            String sql = "SELECT `Firstname`,`Lastname`,`courseinstructor.PersonID`,`courseinstructor.CourseID` ,`course.Title` FROM `person`,`course`,`courseinstructor` WHERE course.CourseID = courseinstructor.CourseID and courseinstructor.PersonID = person.PersonID and HireDate >0";
             ResultSet rs = DatabaseConnect.doReadQuery(sql);
 
             while (rs.next()) {
@@ -138,6 +138,7 @@ public class CourseInstructorDAL {
 
     public static String getTitleById(int courseId) {
         String title = null;
+        DatabaseConnect.connectDB();
         Connection connection = DatabaseConnect.getConnection();
 
         try {
@@ -155,8 +156,16 @@ public class CourseInstructorDAL {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } 
-
+        DatabaseConnect.closeConnection();
         return title;
     }
-  
+    public static void main(String[] args) {
+        List<String> a= new ArrayList<>();
+        a=CourseInstructorDAL.getAllPersonName();
+        for(String b : a)
+        {
+            System.out.println("DAL.CourseInstructorDAL.main()"+ b);
+                    
+        }
+    }
 }
