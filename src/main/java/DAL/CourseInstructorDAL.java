@@ -19,11 +19,10 @@ public class CourseInstructorDAL {
     
     public static List<CourseInstructorDTO> getAllCourseInstructors() {
         List<CourseInstructorDTO> courseInstructors = new ArrayList<>();
-         DatabaseConnect.connectDB();
         Connection connection = DatabaseConnect.getConnection();
 
         try {
-            String sql = "SELECT `Firstname`,`Lastname`,`courseinstructor.PersonID`,`courseinstructor.CourseID` ,`course.Title` FROM `person`,`course`,`courseinstructor` WHERE course.CourseID = courseinstructor.CourseID and courseinstructor.PersonID = person.PersonID and HireDate >0";
+            String sql = "SELECT * FROM CourseInstructor";
             ResultSet rs = DatabaseConnect.doReadQuery(sql);
 
             while (rs.next()) {
@@ -37,13 +36,13 @@ public class CourseInstructorDAL {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } 
-        DatabaseConnect.closeConnection();
+
         return courseInstructors;
     }
 
     public static List<String> getAllPersonName() {
             List<String> PersonName = new ArrayList<>();
-            DatabaseConnect.connectDB();
+        
             Connection connection = DatabaseConnect.getConnection();
 
             try {
@@ -62,12 +61,12 @@ public class CourseInstructorDAL {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             } 
-            DatabaseConnect.closeConnection();
+           
             return PersonName;
         }
         public static List<String> getAllTitleCourse() {
             List<String> TitleCourse = new ArrayList<>();
-            DatabaseConnect.connectDB();
+           
             Connection connection = DatabaseConnect.getConnection();
 
             try {
@@ -85,7 +84,7 @@ public class CourseInstructorDAL {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             } 
-            DatabaseConnect.closeConnection();
+           
             return TitleCourse;
         }
     public static void updateCourseInstructor(CourseInstructorDTO courseInstructor) {
@@ -138,7 +137,7 @@ public class CourseInstructorDAL {
 
     public static String getTitleById(int courseId) {
         String title = null;
-        DatabaseConnect.connectDB();
+     
         Connection connection = DatabaseConnect.getConnection();
 
         try {
@@ -156,16 +155,8 @@ public class CourseInstructorDAL {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } 
-        DatabaseConnect.closeConnection();
+       
         return title;
     }
-    public static void main(String[] args) {
-        List<String> a= new ArrayList<>();
-        a=CourseInstructorDAL.getAllPersonName();
-        for(String b : a)
-        {
-            System.out.println("DAL.CourseInstructorDAL.main()"+ b);
-                    
-        }
-    }
+    
 }
