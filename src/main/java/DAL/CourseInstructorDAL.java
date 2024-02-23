@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.course.DAL;
+package DAL;
 
 import DAL.DatabaseConnect;
 import com.mycompany.course.DTO.CourseInstructorDTO;
@@ -37,6 +37,52 @@ public class CourseInstructorDAL {
 
         return courseInstructors;
     }
+        public static List<String> getAllPersonName() {
+            List<String> PersonName = new ArrayList<>();
+            Connection connection = DatabaseConnect.getConnection();
+
+            try {
+                String sql = "SELECT Lastname,Firstname FROM Person Where HireDate>0";
+                ResultSet rs = DatabaseConnect.doReadQuery(sql);
+
+                while (rs.next()) {
+ 
+                       String firstName = rs.getString("Firstname");
+                        String lastName = rs.getString("Lastname");
+                        String fullname=firstName+ ' ' +lastName;
+
+                    // Tạo đối tượng CourseInstructor và thêm vào danh sác
+
+                    PersonName.add(fullname);
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } 
+
+            return PersonName;
+        }
+        public static List<String> getAllTitleCourse() {
+            List<String> TitleCourse = new ArrayList<>();
+            Connection connection = DatabaseConnect.getConnection();
+
+            try {
+                String sql = "SELECT Title FROM Course";
+                ResultSet rs = DatabaseConnect.doReadQuery(sql);
+
+                while (rs.next()) {
+                       String Titlecourse = rs.getString("Title");
+
+
+                    // Tạo đối tượng CourseInstructor và thêm vào danh sác
+
+                    TitleCourse.add(Titlecourse);
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } 
+
+            return TitleCourse;
+        }
 
     public static void updateCourseInstructor(CourseInstructorDTO courseInstructor) {
         Connection connection = DatabaseConnect.getConnection();
