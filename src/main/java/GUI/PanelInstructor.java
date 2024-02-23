@@ -4,6 +4,15 @@
  */
 package GUI;
 
+import DAL.DatabaseConnect;
+import com.mycompany.course.BLL.CourseInstructorBUS;
+import com.mycompany.course.DTO.CourseInstructorDTO;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author ASUS
@@ -15,6 +24,8 @@ public class PanelInstructor extends javax.swing.JPanel {
      */
     public PanelInstructor() {
         initComponents();
+        DatabaseConnect.connectDB();
+        displayCourseInstructors();
     }
 
     /**
@@ -139,7 +150,16 @@ public class PanelInstructor extends javax.swing.JPanel {
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLuuActionPerformed
-
+    private void displayCourseInstructors() {
+        List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getAllCourseInstructors();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+         int stt = 1; 
+        for (CourseInstructorDTO courseInstructor : courseInstructors) {
+            Object[] row = {stt++,courseInstructor.getPersonID(), courseInstructor.getCourseID()};
+            model.addRow(row);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuu;
