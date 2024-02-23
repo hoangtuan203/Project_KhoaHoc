@@ -2,38 +2,38 @@ package com.mycompany.course.DTO;
 
 public class CourseInstructorDTO 
 {
-    private int courseID;
-    private int personID;
+    private int CourseID;
+    private int PersonID;
     
     public CourseInstructorDTO()
     {
         // none parameters
     }
 
-    public CourseInstructorDTO(int courseID, int personID) 
+    public CourseInstructorDTO(int PersonID, int CourseID) 
     {
-        this.courseID = courseID;
-        this.personID = personID;
+        this.CourseID = CourseID;
+        this.PersonID = PersonID;
     }
 
     public int getCourseID() 
     {
-        return courseID;
+        return CourseID;
     }
 
-    public void setCourseID(int courseID) 
+    public void setCourseID(int CourseID) 
     {
-        this.courseID = courseID;
+        this.CourseID = CourseID;
     }
 
     public int getPersonID() 
     {
-        return personID;
+        return PersonID;
     }
 
-    public void setPersonID(int personID) 
+    public void setPersonID(int PersonID) 
     {
-        this.personID = personID;
+        this.PersonID = PersonID;
     }
     
 }

@@ -1,13 +1,31 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+package BUS;
 
+import DAL.CourseInstructorDAL;
+import com.mycompany.course.DTO.CourseInstructorDTO;
+import java.util.List;
 
-/**
- *
- * @author pc
- */
 public class CourseInstructorBUS {
     
+    public static List<CourseInstructorDTO> getAllCourseInstructors() {
+        return CourseInstructorDAL.getAllCourseInstructors();
+    }
+    
+    public static void updateCourseInstructor(CourseInstructorDTO courseInstructor) {
+        CourseInstructorDAL.updateCourseInstructor(courseInstructor);
+    }
+    
+
+    public static String getPersonNameById(int personId) {
+        return CourseInstructorDAL.getPersonNameById(personId);
+    }
+    
+    public static String getTitleById(int courseId) {
+        return CourseInstructorDAL.getTitleById(courseId);
+    }
+      public static List<String>getAllPersonName() {
+        return CourseInstructorDAL.getAllPersonName();
+    }
+    public static List<String>getAllTitleCourse() {
+        return CourseInstructorDAL.getAllTitleCourse();
+    }
 }
