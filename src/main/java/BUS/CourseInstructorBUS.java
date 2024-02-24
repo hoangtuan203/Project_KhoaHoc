@@ -13,6 +13,9 @@ public class CourseInstructorBUS {
     public static void updateCourseInstructor(CourseInstructorDTO courseInstructor) {
         CourseInstructorDAL.updateCourseInstructor(courseInstructor);
     }
+    public static void updateCourseInstructorbyname(CourseInstructorDTO courseInstructor) {
+        CourseInstructorDAL.updateCourseInstructorbyname(courseInstructor);
+    }
     
 
     public static String getPersonNameById(int personId) {
@@ -27,5 +30,11 @@ public class CourseInstructorBUS {
     }
     public static List<String>getAllTitleCourse() {
         return CourseInstructorDAL.getAllTitleCourse();
+    }
+    public static int getIDbyname(String nameperson) {
+        return CourseInstructorDAL.getIDbyname(nameperson);
+    }
+     public static int getIDbyTITLE(String title) {
+        return CourseInstructorDAL.getIDbyTITLE(title);
     }
 }
