@@ -107,7 +107,7 @@ public class CourseInstructorDAL {
 
     public static String getPersonNameById(int personId) {
         String personName = null;
-        DatabaseConnect.connectDB();
+      
         Connection connection = DatabaseConnect.getConnection();
 
         try {
