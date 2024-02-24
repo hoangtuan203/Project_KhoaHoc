@@ -1,4 +1,4 @@
-package com.mycompany.course.DTO;
+package DTO;
 
 public class CourseInstructorDTO 
 {

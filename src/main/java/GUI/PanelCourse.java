@@ -4,12 +4,9 @@
  */
 package GUI;
 
-import BUS.CourseInstructorBUS;
-import DAL.DatabaseConnect;
-import com.mycompany.course.BLL.CourseBUS;
-import com.mycompany.course.DTO.CourseDTO;
-import com.mycompany.course.DTO.CourseInstructorDTO;
-import java.util.List;
+import DTO.CourseDTO;
+import java.util.ArrayList;
+import java.util.Vector;
 import javax.swing.ButtonGroup;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,16 +15,14 @@ import javax.swing.table.DefaultTableModel;
  * @author ASUS
  */
 public class PanelCourse extends javax.swing.JPanel {
-
+ public static ArrayList<CourseDTO> listCourse = new ArrayList<CourseDTO>();
     /**
      * Creates new form PanelCourse
      */
+     DefaultTableModel dfCourse;
     public PanelCourse() {
         initComponents();
-
-        DatabaseConnect.connectDB();
-
-        displayCourse();
+        dfCourse = (DefaultTableModel) tbCourse.getModel();
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(rdOnline);
         buttonGroup.add(rdOnsite);
@@ -45,7 +40,7 @@ public class PanelCourse extends javax.swing.JPanel {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         pnKhoaHoc = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tbCourse = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -60,18 +55,18 @@ public class PanelCourse extends javax.swing.JPanel {
 
         pnKhoaHoc.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tbCourse.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "STT", "CourseID", "Title", "Credit", "DepartmentID", "Type"
+                "CourseID", "Title", "Credit", "DepartmentID", "Type"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tbCourse);
 
         pnKhoaHoc.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 1000, 290));
 
@@ -119,11 +114,6 @@ public class PanelCourse extends javax.swing.JPanel {
         jButton2.setText("Sửa Khóa Học");
 
         jButton4.setText("Reset");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -158,19 +148,9 @@ public class PanelCourse extends javax.swing.JPanel {
 
         rdOnline.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         rdOnline.setText("Online");
-        rdOnline.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdOnlineActionPerformed(evt);
-            }
-        });
 
         rdOnsite.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         rdOnsite.setText("Onsite");
-        rdOnsite.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdOnsiteActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -208,7 +188,23 @@ public class PanelCourse extends javax.swing.JPanel {
             .addComponent(pnKhoaHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    //load data table course
+//    public void loadDataTableCourse(){
+//        listCourse = null;
+//        listCourse = CourseDAL.getListStudentGrade();
+//        dfCourse = (DefaultTableModel) tbCourse.getModel();
+//        dfCourse.setRowCount(0);
+//
+//        for (CourseDTO student : listCourse) {
+//            Vector<Object> vec = new Vector<Object>();
+//            vec.add(student.getEnrollmentID());
+//            vec.add(student.getCourseID());
+//            vec.add(student.getStudentID());
+//            vec.add(student.getGrade());
+//            dtResultGraden.addRow(vec);
+//        }
+//    
+//    }
     private void btnAddCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCourseActionPerformed
         if (rdOnline.isSelected()) {
             DialogOnlineCourse onlineCourse = new DialogOnlineCourse();
@@ -218,86 +214,10 @@ public class PanelCourse extends javax.swing.JPanel {
             DiaglogOnsiteCourse onsiteCourse = new DiaglogOnsiteCourse();
             onsiteCourse.setVisible(true);
             rdOnline.setSelected(false); // Đảm bảo chỉ có một RadioButton được chọn
-        }   
+        }
+
     }//GEN-LAST:event_btnAddCourseActionPerformed
 
-    private void rdOnlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdOnlineActionPerformed
-        // Xử lý sự kiện khi RadioButton rdOnline được chọn
-        displayOnlineCourses();
-    }//GEN-LAST:event_rdOnlineActionPerformed
-    
-    private void displayOnlineCourses() {
-        // Gọi hàm để lấy và hiển thị danh sách khóa học online từ cơ sở dữ liệu
-        List<CourseDTO> onlineCourses = CourseBUS.getOnlineCourse();
-
-        // Cập nhật dữ liệu trong bảng jTable2 để hiển thị danh sách khóa học online
-        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        model.setRowCount(0);
-        int stt = 1;
-        for (CourseDTO onlineCourse : onlineCourses) {
-            Object[] row = {
-                stt++,
-                onlineCourse.getCourseID(),
-                onlineCourse.getTitle(),
-                onlineCourse.getCredits(),
-                onlineCourse.getDepartmentID(),
-                "Online" // Đặt giá trị cố định cho cột Type vì đây là danh sách khóa học online
-            };
-            model.addRow(row);
-        }
-    }
-
-    
-    private void rdOnsiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdOnsiteActionPerformed
-        /// Xử lý sự kiện khi RadioButton rdOnsite được chọn
-        displayOnsiteCourses();
-    }//GEN-LAST:event_rdOnsiteActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        displayCourse();
-    }//GEN-LAST:event_jButton4ActionPerformed
-    
-    private void displayOnsiteCourses() {
-        // Gọi hàm để lấy và hiển thị danh sách khóa học online từ cơ sở dữ liệu
-        List<CourseDTO> onsiteCourses = CourseBUS.getOnsiteCourse();
-
-        // Cập nhật dữ liệu trong bảng jTable2 để hiển thị danh sách khóa học online
-        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        model.setRowCount(0);
-        int stt = 1;
-        for (CourseDTO onsiteCourse : onsiteCourses) {
-            Object[] row = {
-                stt++,
-                onsiteCourse.getCourseID(),
-                onsiteCourse.getTitle(),
-                onsiteCourse.getCredits(),
-                onsiteCourse.getDepartmentID(),
-                "Onsite" // Đặt giá trị cố định cho cột Type vì đây là danh sách khóa học online
-            };
-            model.addRow(row);
-        }
-    }
-
-    
-    private void displayCourse() {
-        List<CourseDTO> course = CourseBUS.getAllCourse();
-        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        model.setRowCount(0);
-        int stt = 1;
-        for (CourseDTO Course : course) {
-            Object[] row = {
-                stt++,
-                Course.getCourseID(),
-                Course.getTitle(),
-                Course.getCredits(),
-                Course.getDepartmentID(),
-                CourseBUS.getTypebyID(Course.getCourseID())
-
-            };
-            model.addRow(row);
-        }
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCourse;
@@ -310,10 +230,10 @@ public class PanelCourse extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel pnKhoaHoc;
     private javax.swing.JRadioButton rdOnline;
     private javax.swing.JRadioButton rdOnsite;
+    private javax.swing.JTable tbCourse;
     // End of variables declaration//GEN-END:variables
 }

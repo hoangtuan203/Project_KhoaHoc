@@ -6,7 +6,6 @@ package GUI;
 
 
 import BUS.CourseInstructorBUS;
-import com.mycompany.course.DTO.CourseInstructorDTO;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,11 +15,8 @@ import DAL.DatabaseConnect;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -32,47 +28,15 @@ public class PanelInstructor extends javax.swing.JPanel {
     /**
      * Creates new form PanelInstructor
      */
-     String personName;
-     String title;
     public PanelInstructor() {
         initComponents();
 
-<<<<<<< HEAD
-       
-     
-=======
         //displayCourseInstructors();
+     
+//        DatabaseConnect.connectDB();
+//        displayCourseInstructors();
 
->>>>>>> 38a3ccb7866b2f215484f4bd53678c14ced512de
-        DatabaseConnect.connectDB();
-        fillcbxnameperson();
-        fillcbxcourseinstructor();
-        
-        
-        displayCourseInstructors();
-        fillcbxcourseinstructor();
-        fillcbxnameperson();
-        Tablephancong.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-    public void valueChanged(ListSelectionEvent event) {
-        if (!event.getValueIsAdjusting()) {
-            int selectedRow = Tablephancong.getSelectedRow();
-            if (selectedRow != -1) {
-                showSelectedRowData(selectedRow);
-               
-            }
-        }
     }
-});
-    }
-private void showSelectedRowData(int selectedRow) {
-    // Lấy dữ liệu từ các ô trong hàng đã chọn
-    personName = Tablephancong.getValueAt(selectedRow, 2).toString(); // Lấy dữ liệu từ cột tên giảng viên
-    title = Tablephancong.getValueAt(selectedRow, 4).toString(); // Lấy dữ liệu từ cột tên khóa học
-    
-    // Hiển thị dữ liệu lên các trường nhập liệu khác trên giao diện
-    cbxnamegv.setSelectedItem(personName);
-    cbxtitlecourser.setSelectedItem(title);
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -85,11 +49,11 @@ private void showSelectedRowData(int selectedRow) {
 
         jPanel6 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Tablephancong = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        jtfSearch = new javax.swing.JTextField();
-        cbxSearch = new javax.swing.JComboBox<>();
-        btnSearch = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        button5 = new java.awt.Button();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         cbxnamegv = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
@@ -97,7 +61,6 @@ private void showSelectedRowData(int selectedRow) {
         cbxtitlecourser = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         btnLuu = new javax.swing.JButton();
-        btnReload = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(990, 660));
         setLayout(new java.awt.GridLayout(1, 0));
@@ -105,7 +68,7 @@ private void showSelectedRowData(int selectedRow) {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jPanel6.setLayout(null);
 
-        Tablephancong.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -116,23 +79,30 @@ private void showSelectedRowData(int selectedRow) {
                 "STT", "ID giảng viên", "Tên giảng viên", "ID khóa học", "Tên khóa Học"
             }
         ));
-        jScrollPane1.setViewportView(Tablephancong);
+        jScrollPane1.setViewportView(jTable1);
 
         jPanel6.add(jScrollPane1);
-        jScrollPane1.setBounds(460, 110, 520, 450);
+        jScrollPane1.setBounds(490, 130, 520, 430);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jtfSearch.setToolTipText("");
-
-        cbxSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Khóa học", "Giảng viên" }));
-
-        btnSearch.setText("Tìm kiếm");
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+        jTextField1.setToolTipText("");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
+                jTextField1ActionPerformed(evt);
             }
         });
+
+        button5.setActionCommand("Tìm kiếm");
+        button5.setEnabled(false);
+        button5.setLabel("Tìm kiếm");
+        button5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button5ActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Khóa học", "Giảng viên" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -140,42 +110,29 @@ private void showSelectedRowData(int selectedRow) {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-<<<<<<< HEAD
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
-=======
-                .addComponent(jtfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
->>>>>>> 38a3ccb7866b2f215484f4bd53678c14ced512de
+                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbxSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-<<<<<<< HEAD
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(button5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
-=======
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
->>>>>>> 38a3ccb7866b2f215484f4bd53678c14ced512de
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        button5.getAccessibleContext().setAccessibleName("Tìm kiếm");
+
         jPanel6.add(jPanel2);
-        jPanel2.setBounds(460, 40, 520, 70);
+        jPanel2.setBounds(490, 40, 520, 70);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -206,13 +163,6 @@ private void showSelectedRowData(int selectedRow) {
             }
         });
 
-        btnReload.setText("Tải lại");
-        btnReload.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReloadActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -233,9 +183,7 @@ private void showSelectedRowData(int selectedRow) {
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(93, 93, 93)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnReload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnLuu, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))))
+                        .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -253,13 +201,7 @@ private void showSelectedRowData(int selectedRow) {
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
                 .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-<<<<<<< HEAD
-                .addContainerGap(155, Short.MAX_VALUE))
-=======
-                .addGap(31, 31, 31)
-                .addComponent(btnReload, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
->>>>>>> 38a3ccb7866b2f215484f4bd53678c14ced512de
+                .addContainerGap(146, Short.MAX_VALUE))
         );
 
         jPanel6.add(jPanel3);
@@ -268,150 +210,63 @@ private void showSelectedRowData(int selectedRow) {
         add(jPanel6);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button5ActionPerformed
+
     private void cbxnamegvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxnamegvActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxnamegvActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-<<<<<<< HEAD
-       int i=Tablephancong.getSelectedRow();
-       if(i>=0)
-       {
-           int IDperson=Integer.parseInt(Tablephancong.getValueAt(i, 1).toString());
-           int IDcourse=Integer.parseInt(Tablephancong.getValueAt(i, 3).toString());
-//           int IDperson=Integer.parseInt(personName);
-//           int IDcourse=Integer.parseInt(title);
-           String testy=(String)cbxnamegv.getSelectedItem();
-           String testx=(String)cbxtitlecourser.getSelectedItem();
-           int IDpersonchange=CourseInstructorBUS.getIDbyname(testy);
-           int IDcoursechange=CourseInstructorBUS.getIDbyTITLE(testx);
-            System.out.println(""+IDcourse+IDcoursechange +"..."+IDperson+" " +IDpersonchange);
-           if(IDcourse==IDcoursechange && IDperson!=IDpersonchange)
-           {
-               CourseInstructorDTO change=new CourseInstructorDTO(IDpersonchange,IDcoursechange);
-               System.out.println("Tên khác nhau"+IDcourse+IDcoursechange +"..."+IDperson+" " +IDpersonchange);
-               CourseInstructorBUS.updateCourseInstructor(change);
-               displayCourseInstructors();
-               
-               
-           }
-           else if(IDcourse!=IDcoursechange && IDperson==IDpersonchange)
-           {
-               CourseInstructorDTO change=new CourseInstructorDTO(IDpersonchange,IDcoursechange);
-               System.out.println("lôpc nhau"+IDcourse+IDcoursechange +"..."+IDperson+" " +IDpersonchange);
-               CourseInstructorBUS.updateCourseInstructorbyname(change);
-               displayCourseInstructors();
-                  
-           }
-           else if(IDcourse!=IDcoursechange && IDperson!=IDpersonchange)
-           {
-               JOptionPane.showMessageDialog(this, "Chỉ thay đổi 1 trường : tên giáo viên hoặc tên môn học");
-           }
-           else
-           {
-                 System.out.println("không thay đổi");
-
-           }
-       }
-       else
-       {
-           JOptionPane.showMessageDialog(this, "Vui lòng chọn vào table");
-       }
-        
-        
-        
-       // TODO add your handling code here:
-=======
-        
->>>>>>> 38a3ccb7866b2f215484f4bd53678c14ced512de
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnLuuActionPerformed
-
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        String keyword = jtfSearch.getText().trim();
-    String searchType = cbxSearch.getSelectedItem().toString();
-
-    if (keyword.isEmpty()) {
-        // Nếu ô tìm kiếm trống, hiển thị toàn bộ danh sách
-        displayCourseInstructors();
-    } else {
-        // Ngược lại, thực hiện tìm kiếm theo loại đã chọn
-        if ("Khóa học".equals(searchType)) {
-            // Tìm kiếm theo khóa học
-            List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getCourseInstructorsByCourseTitle(keyword);
-            displaySearchResult(courseInstructors);
-        } else if ("Giảng viên".equals(searchType)) {
-            // Tìm kiếm theo giảng viên
-            List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getCourseInstructorsByPersonName(keyword);
-            displaySearchResult(courseInstructors);
-        }
-    }
-    }//GEN-LAST:event_btnSearchActionPerformed
-
-    private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
-        jtfSearch.setText("");
-        displayCourseInstructors();
-    }//GEN-LAST:event_btnReloadActionPerformed
-    private void displaySearchResult(List<CourseInstructorDTO> courseInstructors) {
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    model.setRowCount(0);
-    int stt = 1;
-    for (CourseInstructorDTO courseInstructor : courseInstructors) {
-        Object[] row = {
-            stt++,
-            courseInstructor.getPersonID(),
-            CourseInstructorBUS.getPersonNameById(courseInstructor.getPersonID()),
-            courseInstructor.getCourseID(),
-            CourseInstructorBUS.getTitleById(courseInstructor.getCourseID())
-        };
-        model.addRow(row);
-    }
-}
-    private void fillcbxnameperson()
-    {
-        List<String> NamePerson = CourseInstructorBUS.getAllPersonName();
-        for(String name : NamePerson)
-        {
-            cbxnamegv.addItem(name);
-        }
-    }
-    private void fillcbxcourseinstructor()
-    {
-        List<String> titlecouse = CourseInstructorBUS.getAllTitleCourse();
-        for(String title : titlecouse)
-        {
-            cbxtitlecourser.addItem(title);
-        }
-    }
-    
-
-
-    private void displayCourseInstructors() {
-    List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getAllCourseInstructors();
-    DefaultTableModel model = (DefaultTableModel) Tablephancong.getModel();
-    model.setRowCount(0);
-    int stt=1;
-    for (CourseInstructorDTO courseInstructor : courseInstructors) {
-        Object[] row = {
-            stt++,
-            courseInstructor.getPersonID(),
-            CourseInstructorBUS.getPersonNameById(courseInstructor.getPersonID()),
-            courseInstructor.getCourseID(),
-            CourseInstructorBUS.getTitleById(courseInstructor.getCourseID())
-            
-        };
-        model.addRow(row);
-    }
-
-    }
+//    private void fillcbxnameperson()
+//    {
+//        List<String> NamePerson = CourseInstructorBUS.getAllPersonName();
+//        for(String name : NamePerson)
+//        {
+//            cbxnamegv.addItem(name);
+//        }
+//    }
+//    private void fillcbxcourseinstructor()
+//    {
+//        List<String> titlecouse = CourseInstructorBUS.getAllTitleCourse();
+//        for(String title : titlecouse)
+//        {
+//            cbxtitlecourser.addItem(title);
+//        }
+//    }
+//    private void displayCourseInstructors() {
+//    List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getAllCourseInstructors();
+//    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+//    model.setRowCount(0);
+//    int stt=1;
+//    for (CourseInstructorDTO courseInstructor : courseInstructors) {
+//        Object[] row = {
+//            stt++,
+//            courseInstructor.getPersonID(),
+//            CourseInstructorBUS.getPersonNameById(courseInstructor.getPersonID()),
+//            courseInstructor.getCourseID(),
+//            CourseInstructorBUS.getTitleById(courseInstructor.getCourseID())
+//            
+//        };
+//        model.addRow(row);
+//    }
+//
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable Tablephancong;
     private javax.swing.JButton btnLuu;
-    private javax.swing.JButton btnReload;
-    private javax.swing.JButton btnSearch;
-    private javax.swing.JComboBox<String> cbxSearch;
+    private java.awt.Button button5;
     private javax.swing.JComboBox<String> cbxnamegv;
     private javax.swing.JComboBox<String> cbxtitlecourser;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -419,11 +274,7 @@ private void showSelectedRowData(int selectedRow) {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-<<<<<<< HEAD
-    private javax.swing.JTextField jTextField1;
-=======
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jtfSearch;
->>>>>>> 38a3ccb7866b2f215484f4bd53678c14ced512de
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
