@@ -100,6 +100,7 @@ public class CourseInstructorDAL {
             preparedStatement.executeUpdate();System.out.println(""+preparedStatement.executeUpdate());
         } catch (SQLException ex) {
             ex.printStackTrace();
+<<<<<<< HEAD
         } finally {
             DatabaseConnect.closeConnection();
         }
@@ -123,11 +124,14 @@ public class CourseInstructorDAL {
         }
         System.out.println("da cap nhap");
         DatabaseConnect.closeConnection();
+=======
+        } 
+>>>>>>> 38a3ccb7866b2f215484f4bd53678c14ced512de
     }
 
     public static String getPersonNameById(int personId) {
         String personName = null;
-        DatabaseConnect.connectDB();
+      
         Connection connection = DatabaseConnect.getConnection();
 
         try {
@@ -176,6 +180,7 @@ public class CourseInstructorDAL {
        
         return title;
     }
+     
     
 
  public static int getIDbyname(String nameperson) {
