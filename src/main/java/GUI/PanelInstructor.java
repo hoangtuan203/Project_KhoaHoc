@@ -64,6 +64,7 @@ public class PanelInstructor extends javax.swing.JPanel {
         cbxtitlecourser = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         btnLuu = new javax.swing.JButton();
+        btnReload = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(990, 660));
         setLayout(new java.awt.GridLayout(1, 0));
@@ -159,6 +160,13 @@ public class PanelInstructor extends javax.swing.JPanel {
             }
         });
 
+        btnReload.setText("Tải lại");
+        btnReload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReloadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -179,7 +187,9 @@ public class PanelInstructor extends javax.swing.JPanel {
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(93, 93, 93)
-                        .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnReload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnLuu, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -197,7 +207,9 @@ public class PanelInstructor extends javax.swing.JPanel {
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
                 .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(btnReload, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         jPanel6.add(jPanel3);
@@ -234,6 +246,11 @@ public class PanelInstructor extends javax.swing.JPanel {
         }
     }
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
+        jtfSearch.setText("");
+        displayCourseInstructors();
+    }//GEN-LAST:event_btnReloadActionPerformed
     private void displaySearchResult(List<CourseInstructorDTO> courseInstructors) {
     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
     model.setRowCount(0);
@@ -286,6 +303,7 @@ public class PanelInstructor extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuu;
+    private javax.swing.JButton btnReload;
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<String> cbxSearch;
     private javax.swing.JComboBox<String> cbxnamegv;
