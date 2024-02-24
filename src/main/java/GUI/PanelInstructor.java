@@ -37,6 +37,8 @@ public class PanelInstructor extends javax.swing.JPanel {
         DatabaseConnect.connectDB();
         fillcbxnameperson();
         fillcbxcourseinstructor();
+        
+        
         displayCourseInstructors();
 
     }
