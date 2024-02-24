@@ -6,36 +6,67 @@ package DAL;
 
 import DTO.CourseDTO;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
  *
  * @author pc
  */
-public class CourseDAL {
+public class CourseDAL extends DatabaseConnect{
+    
+    public CourseDAL() {
 
-    public static ArrayList<CourseDTO> getListCourse() {
-        Connection conn = null;
-        try {
-            String sql = "select * from course";
-            conn = DatabaseConnect.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-            ArrayList<CourseDTO> dsl = new ArrayList<CourseDTO>();
-            while (rs.next()) {
-                CourseDTO pm = new CourseDTO();
-                pm.setCourseID(rs.getInt(1));
-                pm.setTitle(rs.getString(2));
-                pm.setCredits(rs.getInt(3));
-                pm.setDepartmentID(rs.getInt(4));
-                dsl.add(pm);
-            }
-            return dsl;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        CourseDAL.connectDB();
     }
+
+    public ArrayList  getListCourse() throws SQLException{
+        String query = "SELECT * FROM Course ";
+        ResultSet rs = CourseDAL.doReadQuery(query);
+        ArrayList list = new ArrayList();
+
+        if (rs != null) {
+            int i = 1;
+
+            while (rs.next()) {
+                CourseDTO c = new CourseDTO();
+               c.setCourseID(rs.getInt(1));
+                c.setTitle(rs.getString(2));
+                c.setCredits(rs.getInt(3));
+                c.setDepartmentID(rs.getInt(4));
+                list.add(c);
+            }
+        }
+        return list;
+    }
+    
+    
+    public CourseDTO getCourse(int courseID) throws SQLException {
+
+        String query = "SELECT * FROM Course WHERE CourseID = ? ";
+
+        PreparedStatement p =CourseDAL.getConnection().prepareStatement(query);
+        p.setInt(1, courseID);
+        ResultSet rs = p.executeQuery();
+        
+        CourseDTO c = new CourseDTO();
+        if (rs != null) {
+
+
+            while (rs.next()) {
+                
+                c.setCourseID(rs.getInt(1));
+                c.setTitle(rs.getString(2));
+                c.setCredits(rs.getInt(3));
+                c.setDepartmentID(rs.getInt(4));
+            }
+        }
+        return c;
+
+    }
+    
+    
 }
