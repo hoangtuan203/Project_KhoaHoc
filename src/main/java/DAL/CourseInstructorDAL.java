@@ -102,9 +102,7 @@ public class CourseInstructorDAL {
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
-            DatabaseConnect.closeConnection();
-        }
+        } 
     }
 
     public static String getPersonNameById(int personId) {
@@ -158,5 +156,6 @@ public class CourseInstructorDAL {
        
         return title;
     }
+     
     
 }

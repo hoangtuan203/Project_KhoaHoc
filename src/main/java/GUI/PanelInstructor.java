@@ -33,8 +33,10 @@ public class PanelInstructor extends javax.swing.JPanel {
         initComponents();
 
         //displayCourseInstructors();
-     
+
         DatabaseConnect.connectDB();
+        fillcbxnameperson();
+        fillcbxcourseinstructor();
         displayCourseInstructors();
 
     }
@@ -52,9 +54,9 @@ public class PanelInstructor extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        button5 = new java.awt.Button();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jtfSearch = new javax.swing.JTextField();
+        cbxSearch = new javax.swing.JComboBox<>();
+        btnSearch = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         cbxnamegv = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
@@ -87,23 +89,16 @@ public class PanelInstructor extends javax.swing.JPanel {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jTextField1.setToolTipText("");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jtfSearch.setToolTipText("");
+
+        cbxSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Khóa học", "Giảng viên" }));
+
+        btnSearch.setText("Tìm kiếm");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                btnSearchActionPerformed(evt);
             }
         });
-
-        button5.setActionCommand("Tìm kiếm");
-        button5.setEnabled(false);
-        button5.setLabel("Tìm kiếm");
-        button5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button5ActionPerformed(evt);
-            }
-        });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Khóa học", "Giảng viên" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -111,26 +106,26 @@ public class PanelInstructor extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addComponent(jtfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
+                .addComponent(cbxSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(button5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
-
-        button5.getAccessibleContext().setAccessibleName("Tìm kiếm");
 
         jPanel6.add(jPanel2);
         jPanel2.setBounds(490, 40, 520, 70);
@@ -211,22 +206,49 @@ public class PanelInstructor extends javax.swing.JPanel {
         add(jPanel6);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button5ActionPerformed
-
     private void cbxnamegvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxnamegvActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxnamegvActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnLuuActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        String keyword = jtfSearch.getText().trim();
+    String searchType = cbxSearch.getSelectedItem().toString();
+
+    if (keyword.isEmpty()) {
+        // Nếu ô tìm kiếm trống, hiển thị toàn bộ danh sách
+        displayCourseInstructors();
+    } else {
+        // Ngược lại, thực hiện tìm kiếm theo loại đã chọn
+        if ("Khóa học".equals(searchType)) {
+            // Tìm kiếm theo khóa học
+            List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getCourseInstructorsByCourseTitle(keyword);
+            displaySearchResult(courseInstructors);
+        } else if ("Giảng viên".equals(searchType)) {
+            // Tìm kiếm theo giảng viên
+            List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getCourseInstructorsByPersonName(keyword);
+            displaySearchResult(courseInstructors);
+        }
+    }
+    }//GEN-LAST:event_btnSearchActionPerformed
+    private void displaySearchResult(List<CourseInstructorDTO> courseInstructors) {
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    model.setRowCount(0);
+    int stt = 1;
+    for (CourseInstructorDTO courseInstructor : courseInstructors) {
+        Object[] row = {
+            stt++,
+            courseInstructor.getPersonID(),
+            CourseInstructorBUS.getPersonNameById(courseInstructor.getPersonID()),
+            courseInstructor.getCourseID(),
+            CourseInstructorBUS.getTitleById(courseInstructor.getCourseID())
+        };
+        model.addRow(row);
+    }
+}
     private void fillcbxnameperson()
     {
         List<String> NamePerson = CourseInstructorBUS.getAllPersonName();
@@ -264,10 +286,10 @@ public class PanelInstructor extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuu;
-    private java.awt.Button button5;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JComboBox<String> cbxSearch;
     private javax.swing.JComboBox<String> cbxnamegv;
     private javax.swing.JComboBox<String> cbxtitlecourser;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -276,6 +298,6 @@ public class PanelInstructor extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jtfSearch;
     // End of variables declaration//GEN-END:variables
 }
