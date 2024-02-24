@@ -5,7 +5,7 @@
 package DAL;
 
 import DAL.DatabaseConnect;
-import com.mycompany.course.DTO.CourseInstructorDTO;
+import DTO.CourseInstructorDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -102,12 +102,14 @@ public class CourseInstructorDAL {
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } 
+        } finally {
+            DatabaseConnect.closeConnection();
+        }
     }
 
     public static String getPersonNameById(int personId) {
         String personName = null;
-      
+        DatabaseConnect.connectDB();
         Connection connection = DatabaseConnect.getConnection();
 
         try {
@@ -156,6 +158,5 @@ public class CourseInstructorDAL {
        
         return title;
     }
-     
     
 }

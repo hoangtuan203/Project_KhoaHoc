@@ -4,7 +4,6 @@
  */
 package DAL;
 
-import com.mycompany.course.DTO.CourseInstructorDTO;
 import java.util.ArrayList;
 import java.util.List;
 
