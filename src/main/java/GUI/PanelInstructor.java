@@ -48,10 +48,16 @@ public class PanelInstructor extends javax.swing.JPanel {
     }
 });
     }
-  private void showSelectedRowData(int selectedRow) {
-    String personName = Tablephancong.getValueAt(selectedRow, 2).toString();
-    String title = Tablephancong.getValueAt(selectedRow, 4).toString(); 
-    cbxnamegv.setSelectedItem(personName);
+private void showSelectedRowData(int selectedRow) {
+    String personName = (String) Tablephancong.getValueAt(selectedRow, 2);
+    if(personName != null) {
+        cbxnamegv.setSelectedItem(personName);
+    } else {
+        cbxnamegv.setSelectedItem(null); // hoặc có thể sử dụng cbxnamegv.setSelectedIndex(-1);
+    }
+    
+    String title = (String) Tablephancong.getValueAt(selectedRow, 4); 
+    System.out.println("Person Name: " + personName);
     cbxtitlecourser.setSelectedItem(title);
 }
     @SuppressWarnings("unchecked")
@@ -235,7 +241,7 @@ public class PanelInstructor extends javax.swing.JPanel {
        {
            String testy=(String)cbxnamegv.getSelectedItem();
            String testx=(String)cbxtitlecourser.getSelectedItem();
-           if(!testy.equals("NULL"))
+           if(!testy.equals("null"))
            {
                 int IDperson=Integer.parseInt(Tablephancong.getValueAt(i, 1).toString());
                 int IDcourse=Integer.parseInt(Tablephancong.getValueAt(i, 3).toString());
