@@ -369,9 +369,7 @@ ALTER TABLE `StudentGrade`
 --
 -- Constraints for table `OnlineCourse`
 --
-ALTER TABLE `OnlineCourse`
-  ADD CONSTRAINT `onlinecourse_ibfk_1` FOREIGN KEY (`CourseID`) REFERENCES `Course` (`CourseID`);
-COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
