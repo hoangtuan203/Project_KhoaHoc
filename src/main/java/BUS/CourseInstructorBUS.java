@@ -1,12 +1,16 @@
 package BUS;
 
 import DAL.CourseInstructorDAL;
+import DAL.DatabaseConnect;
 import DTO.CourseInstructorDTO;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CourseInstructorBUS {
 
+    public static void ConnectDatabase() {
+        DatabaseConnect.connectDB();
+    }
     public static List<CourseInstructorDTO> getAllCourseInstructors() {
         return CourseInstructorDAL.getAllCourseInstructors();
     }
@@ -41,6 +45,34 @@ public class CourseInstructorBUS {
     }
     public static int getIDbytitle(String title) {
         return CourseInstructorDAL.getIDbytitle(title);
+    }
+    
+    public static List<CourseInstructorDTO> getCourseInstructorsByCourseTitle(String courseTitle) {
+        List<CourseInstructorDTO> result = new ArrayList<>();
+        List<CourseInstructorDTO> allCourseInstructors = getAllCourseInstructors();
+
+        for (CourseInstructorDTO courseInstructor : allCourseInstructors) {
+            String currentCourseTitle = getTitleById(courseInstructor.getCourseID());
+            if (currentCourseTitle.toLowerCase().contains(courseTitle.toLowerCase())) {
+                result.add(courseInstructor);
+            }
+        }
+
+        return result;
+    }
+
+    public static List<CourseInstructorDTO> getCourseInstructorsByPersonName(String personName) {
+        List<CourseInstructorDTO> result = new ArrayList<>();
+        List<CourseInstructorDTO> allCourseInstructors = getAllCourseInstructors();
+
+        for (CourseInstructorDTO courseInstructor : allCourseInstructors) {
+            String currentCourseTitle = getPersonNameById(courseInstructor.getPersonID());
+            if (currentCourseTitle.toLowerCase().contains(personName.toLowerCase())) {
+                result.add(courseInstructor);
+            }
+        }
+
+        return result;
     }
     
 }
