@@ -41,27 +41,18 @@ public class PanelInstructor extends javax.swing.JPanel {
     }
 
     private void showSelectedRowData(int selectedRow) {
-        String personName = Tablephancong.getValueAt(selectedRow, 2).toString();
-        String title = Tablephancong.getValueAt(selectedRow, 4).toString();
-        cbxnamegv.setSelectedItem(personName);
+        String personName = (String) Tablephancong.getValueAt(selectedRow, 2);
+        if (personName != null) {
+            cbxnamegv.setSelectedItem(personName);
+        } else {
+            cbxnamegv.setSelectedItem(null); // hoặc có thể sử dụng cbxnamegv.setSelectedIndex(-1);
+        }
+
+        String title = (String) Tablephancong.getValueAt(selectedRow, 4);
+        System.out.println("Person Name: " + personName);
         cbxtitlecourser.setSelectedItem(title);
     }
-<<<<<<< HEAD
-private void showSelectedRowData(int selectedRow) {
-    String personName = (String) Tablephancong.getValueAt(selectedRow, 2);
-    if(personName != null) {
-        cbxnamegv.setSelectedItem(personName);
-    } else {
-        cbxnamegv.setSelectedItem(null); // hoặc có thể sử dụng cbxnamegv.setSelectedIndex(-1);
-    }
-    
-    String title = (String) Tablephancong.getValueAt(selectedRow, 4); 
-    System.out.println("Person Name: " + personName);
-    cbxtitlecourser.setSelectedItem(title);
-}
-=======
 
->>>>>>> 9f7b93a966442145f90aeffe0b2eb7a1d3b34706
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -246,25 +237,8 @@ private void showSelectedRowData(int selectedRow) {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxnamegvActionPerformed
 
-<<<<<<< HEAD
-    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        int i=Tablephancong.getSelectedRow();
-       if(i>=0)
-       {
-           String testy=(String)cbxnamegv.getSelectedItem();
-           String testx=(String)cbxtitlecourser.getSelectedItem();
-           if(!testy.equals("null"))
-           {
-                int IDperson=Integer.parseInt(Tablephancong.getValueAt(i, 1).toString());
-                int IDcourse=Integer.parseInt(Tablephancong.getValueAt(i, 3).toString());
-                int IDpersonchange=CourseInstructorBUS.getIDbyname(testy);
-                int IDcoursechange=CourseInstructorBUS.getIDbytitle(testx);
-                
-                if(IDcourse==IDcoursechange && IDperson!=IDpersonchange)
-                {
-                    CourseInstructorDTO change=new CourseInstructorDTO(IDperson,IDcourse);
-                    CourseInstructorBUS.updateCourseInstructorbytitle(change,IDpersonchange);
-=======
+    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {
+    }
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         int i = Tablephancong.getSelectedRow();
         if (i >= 0) {
@@ -279,8 +253,7 @@ private void showSelectedRowData(int selectedRow) {
                 if (IDcourse == IDcoursechange && IDperson != IDpersonchange) {
                     CourseInstructorDTO change = new CourseInstructorDTO(IDperson, IDcourse);
                     CourseInstructorBUS.updateCourseInstructorbytitle(change, IDpersonchange);
->>>>>>> 9f7b93a966442145f90aeffe0b2eb7a1d3b34706
-                    displayCourseInstructors();
+                     displayCourseInstructors();
                 } else if (IDcourse != IDcoursechange && IDperson == IDpersonchange) {
                     CourseInstructorDTO change = new CourseInstructorDTO(IDperson, IDcourse);
                     CourseInstructorBUS.updateCourseInstructorbyname(change, IDcoursechange);

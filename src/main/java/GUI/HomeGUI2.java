@@ -44,10 +44,24 @@ public class HomeGUI2 extends javax.swing.JFrame {
         pnKetQua.setLayout(new BorderLayout());
         pnKetQua.add(ketqua, BorderLayout.CENTER);
 
+        //panel sinh vien
+        JPanel pnStudent = new JPanel();
+        PanelStudent student = new PanelStudent();
+        pnStudent.setLayout(new BorderLayout());
+        pnStudent.add(student, BorderLayout.CENTER);
+
+        //panel giang vien 
+        JPanel pnLecture = new JPanel();
+        PanelLecturer lecture = new PanelLecturer();
+        pnLecture.setLayout(new BorderLayout());
+        pnLecture.add(lecture, BorderLayout.CENTER);
+
         //
         panelShow.add(pnCourse, "course");
         panelShow.add(pnInstructor, "assignment");
         panelShow.add(pnKetQua, "result");
+        panelShow.add(pnStudent, "student");
+        panelShow.add(pnLecture, "lecture");
 
     }
 
@@ -68,6 +82,8 @@ public class HomeGUI2 extends javax.swing.JFrame {
         btnAssigiment = new javax.swing.JButton();
         btnCourse = new javax.swing.JButton();
         btnResultCourse = new javax.swing.JButton();
+        btnStudent = new javax.swing.JButton();
+        btnLecture = new javax.swing.JButton();
         panelShow = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -140,17 +156,35 @@ public class HomeGUI2 extends javax.swing.JFrame {
             }
         });
 
+        btnStudent.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnStudent.setText("SINH VIÊN");
+        btnStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStudentActionPerformed(evt);
+            }
+        });
+
+        btnLecture.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnLecture.setText("GIẢNG VIÊN");
+        btnLecture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLectureActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnMenuLayout = new javax.swing.GroupLayout(pnMenu);
         pnMenu.setLayout(pnMenuLayout);
         pnMenuLayout.setHorizontalGroup(
             pnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnMenuLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnMenuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCourse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAssigiment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnResultCourse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnLecture, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCourse, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAssigiment, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnResultCourse, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnMenuLayout.setVerticalGroup(
@@ -164,7 +198,11 @@ public class HomeGUI2 extends javax.swing.JFrame {
                 .addComponent(btnAssigiment, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnResultCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(208, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnLecture, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelShowLayout = new javax.swing.GroupLayout(panelShow);
@@ -207,6 +245,8 @@ public class HomeGUI2 extends javax.swing.JFrame {
         btnCourse.setBackground(Color.red);
         btnAssigiment.setBackground(Color.white);
         btnResultCourse.setBackground(Color.white);
+        btnStudent.setBackground(Color.white);
+        btnLecture.setBackground(Color.white);
 
     }//GEN-LAST:event_btnCourseActionPerformed
 
@@ -216,6 +256,8 @@ public class HomeGUI2 extends javax.swing.JFrame {
         btnCourse.setBackground(Color.white);
         btnAssigiment.setBackground(Color.red);
         btnResultCourse.setBackground(Color.white);
+        btnStudent.setBackground(Color.white);
+        btnLecture.setBackground(Color.white);
     }//GEN-LAST:event_btnAssigimentActionPerformed
 
     private void btnResultCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResultCourseActionPerformed
@@ -224,7 +266,29 @@ public class HomeGUI2 extends javax.swing.JFrame {
         btnCourse.setBackground(Color.white);
         btnAssigiment.setBackground(Color.white);
         btnResultCourse.setBackground(Color.red);
+        btnStudent.setBackground(Color.white);
+        btnLecture.setBackground(Color.white);
     }//GEN-LAST:event_btnResultCourseActionPerformed
+
+    private void btnStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentActionPerformed
+        CardLayout cardLayout = (CardLayout) panelShow.getLayout();
+        cardLayout.show(panelShow, "student");
+        btnCourse.setBackground(Color.white);
+        btnAssigiment.setBackground(Color.white);
+        btnResultCourse.setBackground(Color.white);
+        btnStudent.setBackground(Color.red);
+        btnLecture.setBackground(Color.white);
+    }//GEN-LAST:event_btnStudentActionPerformed
+
+    private void btnLectureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLectureActionPerformed
+        CardLayout cardLayout = (CardLayout) panelShow.getLayout();
+        cardLayout.show(panelShow, "lecture");
+        btnCourse.setBackground(Color.white);
+        btnAssigiment.setBackground(Color.white);
+        btnResultCourse.setBackground(Color.white);
+        btnStudent.setBackground(Color.white);
+        btnLecture.setBackground(Color.red);
+    }//GEN-LAST:event_btnLectureActionPerformed
 
     /**
      * @param args the command line arguments
@@ -277,7 +341,9 @@ public class HomeGUI2 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAssigiment;
     private javax.swing.JButton btnCourse;
+    private javax.swing.JButton btnLecture;
     private javax.swing.JButton btnResultCourse;
+    private javax.swing.JButton btnStudent;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
