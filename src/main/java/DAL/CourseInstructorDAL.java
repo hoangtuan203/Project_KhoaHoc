@@ -15,8 +15,6 @@ import java.util.List;
 
 public class CourseInstructorDAL {
 
-    
-
     public static List<CourseInstructorDTO> getAllCourseInstructors() {
         List<CourseInstructorDTO> courseInstructors = new ArrayList<>();
 
@@ -84,7 +82,7 @@ public class CourseInstructorDAL {
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } 
+        }
     }//cong anh 
 
     public static void updateCourseInstructorbytitle(CourseInstructorDTO courseInstructor, int change) {
@@ -99,7 +97,7 @@ public class CourseInstructorDAL {
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } 
+        }
     }//Y
 
     public static String getPersonNameById(int personId) {
@@ -156,7 +154,7 @@ public class CourseInstructorDAL {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-       
+
         return ID;
     }//Y
 
@@ -176,7 +174,7 @@ public class CourseInstructorDAL {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+
         return ID;
     }//Y
 
@@ -192,8 +190,8 @@ public class CourseInstructorDAL {
             preparedStatement.setInt(2, courseInstructor.getPersonID());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
-        } 
-        
+            ex.printStackTrace();
+        }
 
     }//Y
 }

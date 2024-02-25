@@ -11,6 +11,7 @@ public class CourseInstructorBUS {
     public static void ConnectDatabase() {
         DatabaseConnect.connectDB();
     }
+
     public static List<CourseInstructorDTO> getAllCourseInstructors() {
         return CourseInstructorDAL.getAllCourseInstructors();
     }
@@ -18,11 +19,13 @@ public class CourseInstructorBUS {
     public static void updateCourseInstructor(CourseInstructorDTO courseInstructor) {
         CourseInstructorDAL.updateCourseInstructor(courseInstructor);
     }
-    public static void updateCourseInstructorbyname(CourseInstructorDTO courseInstructor,int change) {
-        CourseInstructorDAL.updateCourseInstructorbyname(courseInstructor,change);
+
+    public static void updateCourseInstructorbyname(CourseInstructorDTO courseInstructor, int change) {
+        CourseInstructorDAL.updateCourseInstructorbyname(courseInstructor, change);
     }
-     public static void updateCourseInstructorbytitle(CourseInstructorDTO courseInstructor,int change) {
-        CourseInstructorDAL.updateCourseInstructorbytitle(courseInstructor,change);
+
+    public static void updateCourseInstructorbytitle(CourseInstructorDTO courseInstructor, int change) {
+        CourseInstructorDAL.updateCourseInstructorbytitle(courseInstructor, change);
     }
 
     public static String getPersonNameById(int personId) {
@@ -40,13 +43,15 @@ public class CourseInstructorBUS {
     public static List<String> getAllTitleCourse() {
         return CourseInstructorDAL.getAllTitleCourse();
     }
+
     public static int getIDbyname(String nameperson) {
         return CourseInstructorDAL.getIDbyname(nameperson);
     }
+
     public static int getIDbytitle(String title) {
         return CourseInstructorDAL.getIDbytitle(title);
     }
-    
+
     public static List<CourseInstructorDTO> getCourseInstructorsByCourseTitle(String courseTitle) {
         List<CourseInstructorDTO> result = new ArrayList<>();
         List<CourseInstructorDTO> allCourseInstructors = getAllCourseInstructors();
@@ -74,5 +79,5 @@ public class CourseInstructorBUS {
 
         return result;
     }
-    
+
 }

@@ -98,11 +98,6 @@ public class PanelInstructor extends javax.swing.JPanel {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jblSearch.setToolTipText("");
-        jblSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jblSearchActionPerformed(evt);
-            }
-        });
 
         cbxSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Khóa học", "Giảng viên" }));
 
@@ -144,11 +139,6 @@ public class PanelInstructor extends javax.swing.JPanel {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         cbxnamegv.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cbxnamegv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxnamegvActionPerformed(evt);
-            }
-        });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Giảng viên :");
@@ -228,15 +218,6 @@ public class PanelInstructor extends javax.swing.JPanel {
         add(jPanel6);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jblSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jblSearchActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jblSearchActionPerformed
-
-    private void cbxnamegvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxnamegvActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxnamegvActionPerformed
-
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {
     }
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -253,11 +234,13 @@ public class PanelInstructor extends javax.swing.JPanel {
                 if (IDcourse == IDcoursechange && IDperson != IDpersonchange) {
                     CourseInstructorDTO change = new CourseInstructorDTO(IDperson, IDcourse);
                     CourseInstructorBUS.updateCourseInstructorbytitle(change, IDpersonchange);
-                     displayCourseInstructors();
+                    displayCourseInstructors();
+                    JOptionPane.showMessageDialog(this, "Phân công giảng dạy thành công");
                 } else if (IDcourse != IDcoursechange && IDperson == IDpersonchange) {
                     CourseInstructorDTO change = new CourseInstructorDTO(IDperson, IDcourse);
                     CourseInstructorBUS.updateCourseInstructorbyname(change, IDcoursechange);
                     displayCourseInstructors();
+
                 } else if (IDcourse != IDcoursechange && IDperson != IDpersonchange) {
                     JOptionPane.showMessageDialog(this, "Chỉ thay đổi 1 trường : tên giáo viên hoặc tên môn học");
                 } else {
