@@ -27,7 +27,7 @@ public class DatabaseConnect {
             c = (Connection) DriverManager.getConnection(dbPath, dbUser, dbPassword);
             s = c.createStatement();
             
-//            System.out.println("Kết nối thành công DB");
+            System.out.println("Kết nối thành công DB");
         } catch (SQLException ex) {
             System.out.print(ex.getMessage());
         }

@@ -6,18 +6,27 @@ public class CourseDTO
     private String title;
     private int credits;
     private int departmentID;
-
+    private String type;
     public CourseDTO()
     {
         // none paremeters
     }
     
-    public CourseDTO(int courseID, String title, int credits, int departmentID) 
+    public CourseDTO(int courseID, String title, int credits, int departmentID,String type) 
     {
         this.courseID = courseID;
         this.title = title;
         this.credits = credits;
         this.departmentID = departmentID;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getCourseID() 
@@ -59,5 +68,12 @@ public class CourseDTO
     {
         this.departmentID = departmentID;
     }
+
+    @Override
+    public String toString() {
+        return "Course{title=" +title+", credits=" + credits+ ",departmentID="  + departmentID + ", type= " + type +"}";
+    }
+    
+    
     
 }
