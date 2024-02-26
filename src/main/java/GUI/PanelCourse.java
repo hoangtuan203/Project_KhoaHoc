@@ -4,9 +4,14 @@
  */
 package GUI;
 
+import BUS.CourseBUS;
 import DTO.CourseDTO;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,14 +20,19 @@ import javax.swing.table.DefaultTableModel;
  * @author ASUS
  */
 public class PanelCourse extends javax.swing.JPanel {
- public static ArrayList<CourseDTO> listCourse = new ArrayList<CourseDTO>();
+    CourseBUS courseBUS = new CourseBUS();
     /**
      * Creates new form PanelCourse
      */
-     DefaultTableModel dfCourse;
+    
     public PanelCourse() {
         initComponents();
-        dfCourse = (DefaultTableModel) tbCourse.getModel();
+        try {
+            listCourse();
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelCourse.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(rdOnline);
         buttonGroup.add(rdOnsite);
@@ -218,6 +228,26 @@ public class PanelCourse extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnAddCourseActionPerformed
 
+private void listCourse() throws SQLException {
+        List list = courseBUS.getListCourse(1);
+        DefaultTableModel model = convertCourse(list);
+        tbCourse.setModel(model);
+//        lbStatus.setText("Num of rows: " + list.size());
+    }
+private DefaultTableModel convertCourse(List list) {
+        String[] columnNames = {"CourseID", "Title", "Credit", "DepartmentID", "Type"};
+        Object[][] data = new Object[list.size()][5];
+        for (int i = 0; i < list.size(); i++) {
+            CourseDTO c = (CourseDTO) list.get(i);
+            data[i][0] = c.getCourseID();
+            data[i][1] = c.getTitle();
+            data[i][2] = c.getCredits();
+            data[i][3] = c.getDepartmentID();
+            data[i][4] = c.getType();
+        }
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        return model;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCourse;
