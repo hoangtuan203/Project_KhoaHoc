@@ -8,10 +8,10 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 public class DatabaseConnect {
-   private static Connection c;
-    private static Statement s;
+    public static Connection c;
+    public static Statement s;
     
-    private static String host, port, dbName, dbUser, dbPassword;
+    public static String host, port, dbName, dbUser, dbPassword;
     
     
     public static void connectDB()

@@ -6,6 +6,7 @@ package GUI;
 
 import DAL.StudentGradeDAL;
 import DTO.StudentGradeDTO;
+import BUS.StudentGradeBUS;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
@@ -17,13 +18,15 @@ import javax.swing.table.DefaultTableModel;
 public class PanelResultCourse extends javax.swing.JPanel {
 
     DefaultTableModel dtResultGraden;
+    private StudentGradeBUS SGBUS;
     /**
      * Creates new form PanelPhanCOng
      */
     public PanelResultCourse() {
         initComponents();
+        SGBUS = new StudentGradeBUS();
         dtResultGraden = (DefaultTableModel) tbResult.getModel();
-        
+        SGBUS.HienDL(dtResultGraden);
     }
     
 
@@ -64,23 +67,33 @@ public class PanelResultCourse extends javax.swing.JPanel {
 
         jButton6.setText("Tìm Kiếm");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tăng", "Giảm" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Không Sắp Xếp", "Giảm", "Tăng" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                swap(evt);
             }
         });
 
         jLabel1.setText("Sắp Xếp Theo Grade:");
 
         jButton1.setText("Reset");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Reset(evt);
+            }
+        });
 
         jButton2.setText("<");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PrePage(evt);
+            }
+        });
 
         jButton3.setText(">");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                NextPage(evt);
             }
         });
 
@@ -158,13 +171,30 @@ public class PanelResultCourse extends javax.swing.JPanel {
  
   
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    private void swap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swap
+        if(evt.getSource() == jComboBox1) {
+            int idx = jComboBox1.getSelectedIndex();
+            if(idx == 0) {
+                SGBUS.Reset(dtResultGraden, jLabel2);
+            } else if(idx == 1) {
+                SGBUS.GradeGiam(dtResultGraden, jLabel2);
+            } else {
+                SGBUS.GradeTang(dtResultGraden, jLabel2);
+            }
+        }
+    }//GEN-LAST:event_swap
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void NextPage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextPage
+        SGBUS.NextPage(dtResultGraden, jLabel2);
+    }//GEN-LAST:event_NextPage
+
+    private void PrePage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrePage
+        SGBUS.PevPage(dtResultGraden, jLabel2);
+    }//GEN-LAST:event_PrePage
+
+    private void Reset(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Reset
+       SGBUS.Reset(dtResultGraden, jLabel2);
+    }//GEN-LAST:event_Reset
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
