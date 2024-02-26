@@ -218,8 +218,7 @@ public class PanelInstructor extends javax.swing.JPanel {
         add(jPanel6);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {
-    }
+    
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         int i = Tablephancong.getSelectedRow();
         if (i >= 0) {
@@ -240,18 +239,17 @@ public class PanelInstructor extends javax.swing.JPanel {
                     CourseInstructorDTO change = new CourseInstructorDTO(IDperson, IDcourse);
                     CourseInstructorBUS.updateCourseInstructorbyname(change, IDcoursechange);
                     displayCourseInstructors();
-
+                    JOptionPane.showMessageDialog(this, "Phân công giảng dạy thành công");
                 } else if (IDcourse != IDcoursechange && IDperson != IDpersonchange) {
                     JOptionPane.showMessageDialog(this, "Chỉ thay đổi 1 trường : tên giáo viên hoặc tên môn học");
-                } else {
-                    System.out.println("không thay đổi");
-                }
+                } 
             } else {
                 int IDperson = Integer.parseInt(Tablephancong.getValueAt(i, 1).toString());
                 int IDcourse = Integer.parseInt(Tablephancong.getValueAt(i, 3).toString());
                 CourseInstructorDTO change = new CourseInstructorDTO(IDperson, IDcourse);
                 CourseInstructorBUS.updateCourseInstructorbytitle(change, 0);
                 displayCourseInstructors();
+                JOptionPane.showMessageDialog(this, "Xóa giảng viên thành công");
             }
         } else {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn vào table");
@@ -270,11 +268,15 @@ public class PanelInstructor extends javax.swing.JPanel {
 
                 List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getCourseInstructorsByCourseTitle(keyword);
                 displaySearchResult(courseInstructors);
+                List<CourseInstructorDTO> courseInstructorsById = CourseInstructorBUS.getCourseInstructorsByCourseId(keyword);
+                displaySearchResult(courseInstructorsById);
 
             } else if ("Giảng viên".equals(searchType)) {
 
                 List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getCourseInstructorsByPersonName(keyword);
                 displaySearchResult(courseInstructors);
+                List<CourseInstructorDTO> courseInstructorsById = CourseInstructorBUS.getCourseInstructorsByPersonId(keyword);
+                displaySearchResult(courseInstructorsById);
             }
         }
     }//GEN-LAST:event_btnSearchActionPerformed
