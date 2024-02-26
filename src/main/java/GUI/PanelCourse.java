@@ -20,7 +20,9 @@ import javax.swing.table.DefaultTableModel;
  * @author ASUS
  */
 public class PanelCourse extends javax.swing.JPanel {
+
     CourseBUS courseBUS = new CourseBUS();
+
     /**
      * Creates new form PanelCourse
      */
@@ -32,10 +34,11 @@ public class PanelCourse extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(PanelCourse.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+        
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(rdOnline);
         buttonGroup.add(rdOnsite);
+        rdOnline.setSelected(true);
     }
 
     /**
@@ -73,7 +76,7 @@ public class PanelCourse extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "CourseID", "Title", "Credit", "DepartmentID", "Type"
+                "CourseID", "Title", "Credit", "Department Name", "Type"
             }
         ));
         jScrollPane2.setViewportView(tbCourse);
@@ -81,8 +84,6 @@ public class PanelCourse extends javax.swing.JPanel {
         pnKhoaHoc.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 1000, 290));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-
-        jTextField1.setText("Nhập thông tin tìm kiếm");
 
         jButton1.setText("Tìm Kiếm");
 
@@ -227,15 +228,16 @@ public class PanelCourse extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_btnAddCourseActionPerformed
-
-private void listCourse() throws SQLException {
+    
+    private void listCourse() throws SQLException {
         List list = courseBUS.getListCourse(1);
         DefaultTableModel model = convertCourse(list);
         tbCourse.setModel(model);
 //        lbStatus.setText("Num of rows: " + list.size());
     }
-private DefaultTableModel convertCourse(List list) {
-        String[] columnNames = {"CourseID", "Title", "Credit", "DepartmentID", "Type"};
+
+    private DefaultTableModel convertCourse(List list) {
+        String[] columnNames = {"CourseID", "Title", "Credit", "Department Name", "Type"};
         Object[][] data = new Object[list.size()][5];
         for (int i = 0; i < list.size(); i++) {
             CourseDTO c = (CourseDTO) list.get(i);

@@ -63,7 +63,7 @@
                     <Column editable="true" title="CourseID" type="java.lang.Object"/>
                     <Column editable="true" title="Title" type="java.lang.Object"/>
                     <Column editable="true" title="Credit" type="java.lang.Object"/>
-                    <Column editable="true" title="DepartmentID" type="java.lang.Object"/>
+                    <Column editable="true" title="Department Name" type="java.lang.Object"/>
                     <Column editable="true" title="Type" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -112,9 +112,6 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JTextField" name="jTextField1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Nh&#x1ead;p th&#xf4;ng tin t&#xec;m ki&#x1ebf;m"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
