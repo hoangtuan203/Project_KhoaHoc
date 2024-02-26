@@ -7,8 +7,10 @@ package GUI;
 import DAL.StudentGradeDAL;
 import DTO.StudentGradeDTO;
 import BUS.StudentGradeBUS;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -50,6 +52,7 @@ public class PanelResultCourse extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
 
         tbResult.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -63,6 +66,11 @@ public class PanelResultCourse extends javax.swing.JPanel {
             }
         ));
         tbResult.setToolTipText("");
+        tbResult.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                editValue(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbResult);
 
         jButton6.setText("Tìm Kiếm");
@@ -99,6 +107,13 @@ public class PanelResultCourse extends javax.swing.JPanel {
 
         jLabel2.setText("1/2");
 
+        jButton4.setText("Xoá");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                del(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnPhanCongLayout = new javax.swing.GroupLayout(pnPhanCong);
         pnPhanCong.setLayout(pnPhanCongLayout);
         pnPhanCongLayout.setHorizontalGroup(
@@ -107,17 +122,19 @@ public class PanelResultCourse extends javax.swing.JPanel {
                 .addGroup(pnPhanCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnPhanCongLayout.createSequentialGroup()
                         .addGap(71, 71, 71)
-                        .addGroup(pnPhanCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(pnPhanCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(pnPhanCongLayout.createSequentialGroup()
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(54, 54, 54)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(34, 34, 34)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 854, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnPhanCongLayout.createSequentialGroup()
                         .addGap(390, 390, 390)
@@ -132,13 +149,13 @@ public class PanelResultCourse extends javax.swing.JPanel {
             pnPhanCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnPhanCongLayout.createSequentialGroup()
                 .addContainerGap(25, Short.MAX_VALUE)
-                .addGroup(pnPhanCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnPhanCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnPhanCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
@@ -168,8 +185,6 @@ public class PanelResultCourse extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     //load data table 
- 
-  
 
     private void swap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swap
         if(evt.getSource() == jComboBox1) {
@@ -196,11 +211,38 @@ public class PanelResultCourse extends javax.swing.JPanel {
        SGBUS.Reset(dtResultGraden, jLabel2);
     }//GEN-LAST:event_Reset
 
+    private void del(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_del
+        System.out.println(tbResult.getSelectedRow());
+        if(tbResult.getSelectedRow() != -1) {
+            int dialogResult = JOptionPane.showConfirmDialog(null, "bạn có muốn xoá dòng đã chọn không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                SGBUS.delete(dtResultGraden, jLabel2, tbResult.getSelectedRow());
+               JOptionPane.showMessageDialog(null, "Xoá thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Đã huỷ hành động", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng muốn xoá", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_del
+
+    private void editValue(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_editValue
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String[] rowData = new String[tbResult.getColumnCount()];
+            for (int i = 0; i < tbResult.getColumnCount(); i++) {
+                rowData[i] = String.valueOf(tbResult.getValueAt(tbResult.getSelectedRow(), i));
+            }
+            SGBUS.edit(Integer.parseInt(rowData[0]), Integer.parseInt(rowData[1]), Integer.parseInt(rowData[2]),  Float.parseFloat(rowData[3]));
+            JOptionPane.showMessageDialog(null, "Đã lưu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);  
+        }
+    }//GEN-LAST:event_editValue
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;

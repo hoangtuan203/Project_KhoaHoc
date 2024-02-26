@@ -49,7 +49,13 @@ public class StudentGradeBUS {
         
         model.setRowCount(0);
         lb.setText(String.valueOf(vt + 1) + "/2");
-        for (int i = vt*25; i < vt*25 + 25; i++) {
+        int len = 0;
+        if(vt*25 + 25 > sgdto.size()) {
+            len = sgdto.size();
+        } else {
+            len = vt*25 + 25;
+        }
+        for (int i = vt*25; i < len; i++) {
             model.addRow(new Object[]{sgdto.get(i).getEnrollmentID(),
                 sgdto.get(i).getCourseID(),sgdto.get(i).getStudentID(),
                 sgdto.get(i).getGrade()});
@@ -65,7 +71,6 @@ public class StudentGradeBUS {
             System.out.println("da la trang dau");
             return;
         }
-        
         
         model.setRowCount(0);
         lb.setText(String.valueOf(vt - 1) + "/2");
@@ -111,5 +116,33 @@ public class StudentGradeBUS {
             }
         }
         HienDL(model);
+    }
+    
+    public void delete(DefaultTableModel model ,JLabel lb ,int idx) {
+        model.setRowCount(0);
+        int vt = 0;
+        vt = Integer.parseInt((lb.getText().split("/")[0]));
+        sgdto.get(idx + (vt-1)*25).setGrade(0);
+        int len = 0;
+        if((vt-1)*25 + 25 > sgdto.size()) {
+            len = sgdto.size();
+        } else {
+            len = (vt-1)*25 + 25;
+        }
+        for (int i = (vt-1)*25; i < len; i++) {
+            model.addRow(new Object[]{sgdto.get(i).getEnrollmentID(),
+                sgdto.get(i).getCourseID(),sgdto.get(i).getStudentID(),
+                sgdto.get(i).getGrade()});
+        }
+    }
+    
+    public void edit(int en, int co, int st, float gr) {
+        for (int i = 0; i < sgdto.size(); i++) {
+            if(sgdto.get(i).getEnrollmentID() == en) {
+                sgdto.get(i).setCourseID(co);
+                sgdto.get(i).setStudentID(st);
+                sgdto.get(i).setGrade(gr);
+            }
+        }
     }
 }
