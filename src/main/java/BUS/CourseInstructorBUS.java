@@ -80,4 +80,32 @@ public class CourseInstructorBUS {
         return result;
     }
 
+    public static List<CourseInstructorDTO> getCourseInstructorsByPersonId(String targetId) {
+        List<CourseInstructorDTO> result = new ArrayList<>();
+        List<CourseInstructorDTO> allCourseInstructors = getAllCourseInstructors();
+
+        for (CourseInstructorDTO courseInstructor : allCourseInstructors) {
+            int personId = courseInstructor.getPersonID();
+            if (String.valueOf(personId).contains(String.valueOf(targetId))) {
+                result.add(courseInstructor);
+            }
+        }
+
+        return result;
+    }
+    
+    public static List<CourseInstructorDTO> getCourseInstructorsByCourseId(String targetId) {
+        List<CourseInstructorDTO> result = new ArrayList<>();
+        List<CourseInstructorDTO> allCourseInstructors = getAllCourseInstructors();
+
+        for (CourseInstructorDTO courseInstructor : allCourseInstructors) {
+            int courseId = courseInstructor.getCourseID();
+            if (String.valueOf(courseId).contains(String.valueOf(targetId))) {
+                result.add(courseInstructor);
+            }
+        }
+
+        return result;
+    }
+
 }
