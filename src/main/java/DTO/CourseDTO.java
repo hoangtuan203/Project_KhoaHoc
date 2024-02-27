@@ -7,6 +7,7 @@ public class CourseDTO
     private int credits;
     private int departmentID;
     private String type;
+    private String departmentName;
     public CourseDTO()
     {
         // none paremeters
@@ -19,6 +20,14 @@ public class CourseDTO
         this.credits = credits;
         this.departmentID = departmentID;
         this.type = type;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public String getType() {

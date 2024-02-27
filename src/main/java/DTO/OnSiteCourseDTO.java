@@ -7,19 +7,19 @@ public class OnSiteCourseDTO
     private int courseID;
     private String location;
     private String days;
-    private Time Time;
+    private String time;
     
     public OnSiteCourseDTO()
     {
         // none paremeters
     }
 
-    public OnSiteCourseDTO(int courseID, String location, String days, Time Time) 
+    public OnSiteCourseDTO(int courseID, String location, String days, String time) 
     {
         this.courseID = courseID;
         this.location = location;
         this.days = days;
-        this.Time = Time;
+        this.time = time;
     }
     
     public int getCourseID() 
@@ -52,13 +52,13 @@ public class OnSiteCourseDTO
         this.days = days;
     }
 
-    public Time getTime() 
+    public String getTime() 
     {
-        return Time;
+        return time;
     }
 
-    public void setTime(Time Time) 
+    public void setTime(String time) 
     {
-        this.Time = Time;
+        this.time = time;
     }
 }
