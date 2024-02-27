@@ -28,7 +28,7 @@ public class PanelResultCourse extends javax.swing.JPanel {
         initComponents();
         SGBUS = new StudentGradeBUS();
         dtResultGraden = (DefaultTableModel) tbResult.getModel();
-        SGBUS.HienDL(dtResultGraden);
+        SGBUS.FirstTable(dtResultGraden,jLabel2);
     }
     
 
@@ -74,6 +74,11 @@ public class PanelResultCourse extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tbResult);
 
         jButton6.setText("Tìm Kiếm");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Không Sắp Xếp", "Giảm", "Tăng" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -190,7 +195,7 @@ public class PanelResultCourse extends javax.swing.JPanel {
         if(evt.getSource() == jComboBox1) {
             int idx = jComboBox1.getSelectedIndex();
             if(idx == 0) {
-                SGBUS.Reset(dtResultGraden, jLabel2);
+                SGBUS.NotSwap(dtResultGraden,jLabel2,jTextField5.getText());
             } else if(idx == 1) {
                 SGBUS.GradeGiam(dtResultGraden, jLabel2);
             } else {
@@ -212,11 +217,10 @@ public class PanelResultCourse extends javax.swing.JPanel {
     }//GEN-LAST:event_Reset
 
     private void del(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_del
-        System.out.println(tbResult.getSelectedRow());
         if(tbResult.getSelectedRow() != -1) {
             int dialogResult = JOptionPane.showConfirmDialog(null, "bạn có muốn xoá dòng đã chọn không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
             if (dialogResult == JOptionPane.YES_OPTION) {
-                SGBUS.delete(dtResultGraden, jLabel2, tbResult.getSelectedRow());
+                SGBUS.delete(dtResultGraden, jLabel2, (int)tbResult.getValueAt(tbResult.getSelectedRow(), 0));
                JOptionPane.showMessageDialog(null, "Xoá thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Đã huỷ hành động", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -232,10 +236,14 @@ public class PanelResultCourse extends javax.swing.JPanel {
             for (int i = 0; i < tbResult.getColumnCount(); i++) {
                 rowData[i] = String.valueOf(tbResult.getValueAt(tbResult.getSelectedRow(), i));
             }
-            SGBUS.edit(Integer.parseInt(rowData[0]), Integer.parseInt(rowData[1]), Integer.parseInt(rowData[2]),  Float.parseFloat(rowData[3]));
+            SGBUS.edit(Float.parseFloat(rowData[3]),Integer.parseInt(rowData[0]), Integer.parseInt(rowData[1]), Integer.parseInt(rowData[2]));
             JOptionPane.showMessageDialog(null, "Đã lưu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);  
         }
     }//GEN-LAST:event_editValue
+
+    private void search(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search
+        SGBUS.Search(dtResultGraden, jLabel2, jTextField5.getText());
+    }//GEN-LAST:event_search
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

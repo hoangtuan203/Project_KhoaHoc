@@ -7,8 +7,8 @@ import DAL.StudentGradeDAL;
 import DTO.StudentGradeDTO;
 import java.util.ArrayList;
 import java.util.Collections;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -28,73 +28,94 @@ public class StudentGradeBUS {
         return SGDAL.GetDataSG();
     }
     
-    public void HienDL(DefaultTableModel model) {
+    public ArrayList<StudentGradeDTO> loadDataQuery(String query) {
+        return SGDAL.GetDataQuerySG(query);
+    }
+    
+    public void renderTable(DefaultTableModel model ,int min ,int max) {
         model.setRowCount(0);
-        for (int i = 0; i < 25; i++) {
-            model.addRow(new Object[]{sgdto.get(i).getEnrollmentID(),
-                sgdto.get(i).getCourseID(),sgdto.get(i).getStudentID(),
+        for (int i = min; i < max; i++) {
+            model.addRow(new Object[]{
+                sgdto.get(i).getEnrollmentID(),
+                sgdto.get(i).getCourseID(),
+                sgdto.get(i).getStudentID(),
                 sgdto.get(i).getGrade()});
+        }
+        renderUpdate(10,0);
+    }
+    
+    public void renderPage(DefaultTableModel model,JLabel lb,int hd) {
+        int vt = 0, max = 0, len=0;
+        vt = Integer.parseInt((lb.getText().split("/")[0]));
+        max = Integer.parseInt((lb.getText().split("/")[1]));
+        if(hd == 0) {
+            if(vt == max) {
+                return;
+            } else {
+                lb.setText(String.valueOf(vt+1) + "/2");
+                if(vt*25 + 25 > sgdto.size()) {
+                    len = sgdto.size();
+                } else {
+                    len = vt*25 + 25;
+                }
+            }
+        } else if(hd == 1) {
+            if(vt == 1) {
+                return;
+            } else {
+                lb.setText(String.valueOf(vt-1) + "/2");
+                vt = vt - 2;
+                len = vt*25 + 25;
+            }
+        } else if(hd == 2) {
+            vt = vt-1;
+            if(vt*25 + 25 > sgdto.size()) {
+                len = sgdto.size();
+            } else {
+                len = vt*25 + 25;
+            }
+        }
+        renderTable(model, vt*25, len);   
+    }
+    
+    public void renderUpdate(float gr,int ...list) {
+        for (int i = 0; i < sgdto.size(); i++) {
+            if(sgdto.get(i).getEnrollmentID() == list[0] && list[1] != 0) {
+                sgdto.get(i).setCourseID(list[1]);
+                sgdto.get(i).setStudentID(list[2]);
+                sgdto.get(i).setGrade(gr);
+                break;
+            } else if (sgdto.get(i).getEnrollmentID() == list[0] && list[1] == 0){
+                sgdto.get(i).setGrade(gr);
+                break;
+            }
+        }
+    } 
+    
+    public void FirstTable(DefaultTableModel model,JLabel lb) {
+        if(sgdto.size() > 25) {
+            renderTable(model,0,25);
+            lb.setText("1/2");
+        } else {
+            renderTable(model,0,sgdto.size());
+            lb.setText("1/1");
         }
     }
     
     public void NextPage(DefaultTableModel model,JLabel lb) {
-        int vt = 0;
-        int max = 0;
-        vt = Integer.parseInt((lb.getText().split("/")[0]));
-        max = Integer.parseInt((lb.getText().split("/")[1]));
-        if(vt == max) {
-            System.out.println("da la trang cuoi");
-            return;
-        }
-        
-        model.setRowCount(0);
-        lb.setText(String.valueOf(vt + 1) + "/2");
-        int len = 0;
-        if(vt*25 + 25 > sgdto.size()) {
-            len = sgdto.size();
-        } else {
-            len = vt*25 + 25;
-        }
-        for (int i = vt*25; i < len; i++) {
-            model.addRow(new Object[]{sgdto.get(i).getEnrollmentID(),
-                sgdto.get(i).getCourseID(),sgdto.get(i).getStudentID(),
-                sgdto.get(i).getGrade()});
-        }
+        renderPage(model, lb, 0);
     }
     
     public void PevPage(DefaultTableModel model,JLabel lb) {
-        int vt = 0;
-        int max = 0;
-        vt = Integer.parseInt((lb.getText().split("/")[0]));
-        max = Integer.parseInt((lb.getText().split("/")[1]));
-        if(vt == 1) {
-            System.out.println("da la trang dau");
-            return;
-        }
-        
-        model.setRowCount(0);
-        lb.setText(String.valueOf(vt - 1) + "/2");
-        for (int i = (vt-2)*25; i < (vt-2)*25 + 25; i++) {
-            model.addRow(new Object[]{sgdto.get(i).getEnrollmentID(),
-                sgdto.get(i).getCourseID(),sgdto.get(i).getStudentID(),
-                sgdto.get(i).getGrade()});
-        }
+        renderPage(model, lb, 1);
     }
     
     public void Reset(DefaultTableModel model,JLabel lb) {
         sgdto = loadData();
-        lb.setText("1/2");
-        model.setRowCount(0);
-        for (int i = 0; i < 25; i++) {
-            model.addRow(new Object[]{sgdto.get(i).getEnrollmentID(),
-                sgdto.get(i).getCourseID(),sgdto.get(i).getStudentID(),
-                sgdto.get(i).getGrade()});
-        }
+        FirstTable(model,lb);
     }
     
-    public void GradeTang(DefaultTableModel model ,JLabel lb ) {
-        model.setRowCount(0);
-        lb.setText("1/2");
+    public void GradeTang(DefaultTableModel model ,JLabel lb) {
         for (int i = 0; i < sgdto.size(); i++) {
             for (int j = i+1; j < sgdto.size(); j++) {
                 if(sgdto.get(i).getGrade() > sgdto.get(j).getGrade()) {
@@ -102,12 +123,10 @@ public class StudentGradeBUS {
                 }
             }
         }
-        HienDL(model);
+        FirstTable(model,lb);
     }
     
     public void GradeGiam(DefaultTableModel model ,JLabel lb ) {
-        model.setRowCount(0);
-        lb.setText("1/2");
         for (int i = 0; i < sgdto.size(); i++) {
             for (int j = i+1; j < sgdto.size(); j++) {
                 if(sgdto.get(i).getGrade() < sgdto.get(j).getGrade()) {
@@ -115,34 +134,30 @@ public class StudentGradeBUS {
                 }
             }
         }
-        HienDL(model);
+        FirstTable(model,lb);
     }
     
-    public void delete(DefaultTableModel model ,JLabel lb ,int idx) {
-        model.setRowCount(0);
-        int vt = 0;
-        vt = Integer.parseInt((lb.getText().split("/")[0]));
-        sgdto.get(idx + (vt-1)*25).setGrade(0);
-        int len = 0;
-        if((vt-1)*25 + 25 > sgdto.size()) {
-            len = sgdto.size();
+    public void NotSwap(DefaultTableModel model,JLabel lb,String value) {
+        if(value.equalsIgnoreCase("")) {
+            sgdto = loadData();
+            FirstTable(model, lb);
         } else {
-            len = (vt-1)*25 + 25;
-        }
-        for (int i = (vt-1)*25; i < len; i++) {
-            model.addRow(new Object[]{sgdto.get(i).getEnrollmentID(),
-                sgdto.get(i).getCourseID(),sgdto.get(i).getStudentID(),
-                sgdto.get(i).getGrade()});
+            sgdto = loadDataQuery(value);
+            FirstTable(model, lb);
         }
     }
     
-    public void edit(int en, int co, int st, float gr) {
-        for (int i = 0; i < sgdto.size(); i++) {
-            if(sgdto.get(i).getEnrollmentID() == en) {
-                sgdto.get(i).setCourseID(co);
-                sgdto.get(i).setStudentID(st);
-                sgdto.get(i).setGrade(gr);
-            }
-        }
+    public void delete(DefaultTableModel model ,JLabel lb ,int id) {
+        renderUpdate(0,id,0);
+        renderPage(model, lb, 2);
+    }
+    
+    public void edit(float gr ,int ...list) {
+        renderUpdate(gr,list[0],list[1],list[2]);
+    }
+    
+    public void Search(DefaultTableModel model, JLabel lb,String value) {
+        sgdto = loadDataQuery(value);
+        FirstTable(model, lb);
     }
 }

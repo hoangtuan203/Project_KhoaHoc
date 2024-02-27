@@ -40,6 +40,26 @@ public class StudentGradeDAL {
             e.printStackTrace();
             return null;
         }
-        
+    }
+    
+    public ArrayList<StudentGradeDTO> GetDataQuerySG(String query) {
+        arrSG = new ArrayList<StudentGradeDTO>();
+        try {
+            String sql = "select * from studentgrade where EnrollmentID = " + query + " or CourseID = " + query + " or StudentID = " + query;
+            PreparedStatement stmt = DatabaseConnect.c.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                StudentGradeDTO sg = new StudentGradeDTO();
+                sg.setEnrollmentID(rs.getInt(1));
+                sg.setCourseID(rs.getInt(2));
+                sg.setStudentID(rs.getInt(3));
+                sg.setGrade(rs.getInt(4));
+                arrSG.add(sg);
+            }
+            return arrSG;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
