@@ -10,11 +10,15 @@ import javax.swing.table.DefaultTableModel;
 
 import DAL.DatabaseConnect;
 import DTO.CourseInstructorDTO;
+import java.awt.GridLayout;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
@@ -45,7 +49,7 @@ public class PanelInstructor extends javax.swing.JPanel {
         if (personName != null) {
             cbxnamegv.setSelectedItem(personName);
         } else {
-            cbxnamegv.setSelectedItem(null); // hoặc có thể sử dụng cbxnamegv.setSelectedIndex(-1);
+            cbxnamegv.setSelectedItem(null); 
         }
 
         String title = (String) Tablephancong.getValueAt(selectedRow, 4);
@@ -269,27 +273,25 @@ public class PanelInstructor extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         String keyword = jblSearch.getText().trim();
-        String searchType = cbxSearch.getSelectedItem().toString();
+    String searchType = cbxSearch.getSelectedItem().toString();
 
-        if (keyword.isEmpty()) {
-            displayCourseInstructors();
+    if (keyword.isEmpty()) {
+        displayCourseInstructors();
+    } else {
+        List<CourseInstructorDTO> courseInstructors;
+
+        if ("Khóa học".equals(searchType)) {
+            courseInstructors = CourseInstructorBUS.getCourseInstructorsByCourseTitle(keyword);
+            courseInstructors.addAll(CourseInstructorBUS.getCourseInstructorsByCourseId(keyword));
+        } else if ("Giảng viên".equals(searchType)) {
+            courseInstructors = CourseInstructorBUS.getCourseInstructorsByPersonName(keyword);
+            courseInstructors.addAll(CourseInstructorBUS.getCourseInstructorsByPersonId(keyword));
         } else {
-
-            if ("Khóa học".equals(searchType)) {
-
-                List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getCourseInstructorsByCourseTitle(keyword);
-                displaySearchResult(courseInstructors);
-                List<CourseInstructorDTO> courseInstructorsById = CourseInstructorBUS.getCourseInstructorsByCourseId(keyword);
-                displaySearchResult(courseInstructorsById);
-
-            } else if ("Giảng viên".equals(searchType)) {
-
-                List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getCourseInstructorsByPersonName(keyword);
-                displaySearchResult(courseInstructors);
-                List<CourseInstructorDTO> courseInstructorsById = CourseInstructorBUS.getCourseInstructorsByPersonId(keyword);
-                displaySearchResult(courseInstructorsById);
-            }
+            return; 
         }
+
+        displaySearchResult(courseInstructors);
+    }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
@@ -298,20 +300,32 @@ public class PanelInstructor extends javax.swing.JPanel {
     }//GEN-LAST:event_btnReloadActionPerformed
 
     private void btnDetailsViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsViewActionPerformed
-         int selectedRow = Tablephancong.getSelectedRow();
+        int selectedRow = Tablephancong.getSelectedRow();
 
-    if (selectedRow != -1) {
-        int personID = Integer.parseInt(Tablephancong.getValueAt(selectedRow, 1).toString());
-        String personName = (String) Tablephancong.getValueAt(selectedRow, 2);
-        int courseID = Integer.parseInt(Tablephancong.getValueAt(selectedRow, 3).toString());
-        String title = (String) Tablephancong.getValueAt(selectedRow, 4);
+        if (selectedRow != -1) {
+            int personID = Integer.parseInt(Tablephancong.getValueAt(selectedRow, 1).toString());
+            String personName = (String) Tablephancong.getValueAt(selectedRow, 2);
+            int courseID = Integer.parseInt(Tablephancong.getValueAt(selectedRow, 3).toString());
+            String title = (String) Tablephancong.getValueAt(selectedRow, 4);
 
-    
-        String message = String.format("ID giảng viên: %d\nTên giảng viên: %s\nID khóa học: %d\nTên khóa học: %s", personID, personName, courseID, title);
-        JOptionPane.showMessageDialog(this, message, "Chi tiết", JOptionPane.INFORMATION_MESSAGE);
-    } else {
-        JOptionPane.showMessageDialog(this, "Vui lòng chọn vào table để xem chi tiết", "Thông báo", JOptionPane.WARNING_MESSAGE);
-    }
+            JFrame detailFrame = new JFrame("Chi tiết");
+            detailFrame.setSize(300, 200);
+
+            JPanel detailPanel = new JPanel();
+            detailPanel.setLayout(new GridLayout(4, 1));
+            detailPanel.add(new JLabel("ID giảng viên: " + personID));
+            detailPanel.add(new JLabel("Tên giảng viên: " + personName));
+            detailPanel.add(new JLabel("ID khóa học: " + courseID));
+            detailPanel.add(new JLabel("Tên khóa học: " + title));
+
+            detailFrame.add(detailPanel);
+
+            detailFrame.setLocationRelativeTo(null);
+
+            detailFrame.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn vào table để xem chi tiết", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnDetailsViewActionPerformed
     private void displaySearchResult(List<CourseInstructorDTO> courseInstructors) {
         DefaultTableModel model = (DefaultTableModel) Tablephancong.getModel();
