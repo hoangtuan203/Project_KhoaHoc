@@ -52,6 +52,14 @@ public class CourseInstructorBUS {
         return CourseInstructorDAL.getIDbytitle(title);
     }
 
+    public static void deleteCourseInstructor(CourseInstructorDTO courseintructor) {
+        CourseInstructorDAL.deleteCourseInstructor(courseintructor);
+    }
+
+    public static void insertCourseInstructor(CourseInstructorDTO courseintructor) {
+        CourseInstructorDAL.insertCourseInstructor(courseintructor);
+    }
+
     public static List<CourseInstructorDTO> getCourseInstructorsByCourseTitle(String courseTitle) {
         List<CourseInstructorDTO> result = new ArrayList<>();
         List<CourseInstructorDTO> allCourseInstructors = getAllCourseInstructors();
@@ -93,7 +101,7 @@ public class CourseInstructorBUS {
 
         return result;
     }
-    
+
     public static List<CourseInstructorDTO> getCourseInstructorsByCourseId(String targetId) {
         List<CourseInstructorDTO> result = new ArrayList<>();
         List<CourseInstructorDTO> allCourseInstructors = getAllCourseInstructors();

@@ -194,4 +194,30 @@ public class CourseInstructorDAL {
         }
 
     }//Y
+    
+    public static void deleteCourseInstructor(CourseInstructorDTO courseInstructor) {
+        Connection connection = DatabaseConnect.getConnection();
+        try {
+            String sql = "DELETE FROM CourseInstructor WHERE PersonID= ? and courseId = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, courseInstructor.getPersonID());
+            preparedStatement.setInt(2, courseInstructor.getCourseID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }//Y
+    public static void insertCourseInstructor(CourseInstructorDTO courseInstructor) {
+    Connection connection = DatabaseConnect.getConnection();
+    try {
+        String sql = "INSERT INTO courseinstructor(CourseID,PersonID) VALUES (?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, courseInstructor.getCourseID());
+        preparedStatement.setInt(2, courseInstructor.getPersonID());
+        preparedStatement.executeUpdate();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+}
 }
