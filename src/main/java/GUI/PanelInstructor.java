@@ -10,11 +10,15 @@ import javax.swing.table.DefaultTableModel;
 
 import DAL.DatabaseConnect;
 import DTO.CourseInstructorDTO;
+import java.awt.GridLayout;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
@@ -45,7 +49,7 @@ public class PanelInstructor extends javax.swing.JPanel {
         if (personName != null) {
             cbxnamegv.setSelectedItem(personName);
         } else {
-            cbxnamegv.setSelectedItem(null); // hoặc có thể sử dụng cbxnamegv.setSelectedIndex(-1);
+            cbxnamegv.setSelectedItem(null); 
         }
 
         String title = (String) Tablephancong.getValueAt(selectedRow, 4);
@@ -72,6 +76,7 @@ public class PanelInstructor extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
         btnReload = new javax.swing.JButton();
+        btnDetailsView = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(990, 660));
         setLayout(new java.awt.GridLayout(1, 0));
@@ -167,6 +172,13 @@ public class PanelInstructor extends javax.swing.JPanel {
             }
         });
 
+        btnDetailsView.setText("Xem chi tiết");
+        btnDetailsView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDetailsViewActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -189,7 +201,8 @@ public class PanelInstructor extends javax.swing.JPanel {
                         .addGap(126, 126, 126)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnReload, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))))
+                            .addComponent(btnReload, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                            .addComponent(btnDetailsView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -207,9 +220,11 @@ public class PanelInstructor extends javax.swing.JPanel {
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnReload, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnDetailsView, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         jPanel6.add(jPanel3);
@@ -218,7 +233,7 @@ public class PanelInstructor extends javax.swing.JPanel {
         add(jPanel6);
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         int i = Tablephancong.getSelectedRow();
         if (i >= 0) {
@@ -242,7 +257,7 @@ public class PanelInstructor extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Phân công giảng dạy thành công");
                 } else if (IDcourse != IDcoursechange && IDperson != IDpersonchange) {
                     JOptionPane.showMessageDialog(this, "Chỉ thay đổi 1 trường : tên giáo viên hoặc tên môn học");
-                } 
+                }
             } else {
                 int IDperson = Integer.parseInt(Tablephancong.getValueAt(i, 1).toString());
                 int IDcourse = Integer.parseInt(Tablephancong.getValueAt(i, 3).toString());
@@ -258,33 +273,60 @@ public class PanelInstructor extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         String keyword = jblSearch.getText().trim();
-        String searchType = cbxSearch.getSelectedItem().toString();
+    String searchType = cbxSearch.getSelectedItem().toString();
 
-        if (keyword.isEmpty()) {
-            displayCourseInstructors();
+    if (keyword.isEmpty()) {
+        displayCourseInstructors();
+    } else {
+        List<CourseInstructorDTO> courseInstructors;
+
+        if ("Khóa học".equals(searchType)) {
+            courseInstructors = CourseInstructorBUS.getCourseInstructorsByCourseTitle(keyword);
+            courseInstructors.addAll(CourseInstructorBUS.getCourseInstructorsByCourseId(keyword));
+        } else if ("Giảng viên".equals(searchType)) {
+            courseInstructors = CourseInstructorBUS.getCourseInstructorsByPersonName(keyword);
+            courseInstructors.addAll(CourseInstructorBUS.getCourseInstructorsByPersonId(keyword));
         } else {
-
-            if ("Khóa học".equals(searchType)) {
-
-                List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getCourseInstructorsByCourseTitle(keyword);
-                displaySearchResult(courseInstructors);
-                List<CourseInstructorDTO> courseInstructorsById = CourseInstructorBUS.getCourseInstructorsByCourseId(keyword);
-                displaySearchResult(courseInstructorsById);
-
-            } else if ("Giảng viên".equals(searchType)) {
-
-                List<CourseInstructorDTO> courseInstructors = CourseInstructorBUS.getCourseInstructorsByPersonName(keyword);
-                displaySearchResult(courseInstructors);
-                List<CourseInstructorDTO> courseInstructorsById = CourseInstructorBUS.getCourseInstructorsByPersonId(keyword);
-                displaySearchResult(courseInstructorsById);
-            }
+            return; 
         }
+
+        displaySearchResult(courseInstructors);
+    }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
         jblSearch.setText("");
         displayCourseInstructors();
     }//GEN-LAST:event_btnReloadActionPerformed
+
+    private void btnDetailsViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsViewActionPerformed
+        int selectedRow = Tablephancong.getSelectedRow();
+
+        if (selectedRow != -1) {
+            int personID = Integer.parseInt(Tablephancong.getValueAt(selectedRow, 1).toString());
+            String personName = (String) Tablephancong.getValueAt(selectedRow, 2);
+            int courseID = Integer.parseInt(Tablephancong.getValueAt(selectedRow, 3).toString());
+            String title = (String) Tablephancong.getValueAt(selectedRow, 4);
+
+            JFrame detailFrame = new JFrame("Chi tiết");
+            detailFrame.setSize(300, 200);
+
+            JPanel detailPanel = new JPanel();
+            detailPanel.setLayout(new GridLayout(4, 1));
+            detailPanel.add(new JLabel("ID giảng viên: " + personID));
+            detailPanel.add(new JLabel("Tên giảng viên: " + personName));
+            detailPanel.add(new JLabel("ID khóa học: " + courseID));
+            detailPanel.add(new JLabel("Tên khóa học: " + title));
+
+            detailFrame.add(detailPanel);
+
+            detailFrame.setLocationRelativeTo(null);
+
+            detailFrame.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn vào table để xem chi tiết", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDetailsViewActionPerformed
     private void displaySearchResult(List<CourseInstructorDTO> courseInstructors) {
         DefaultTableModel model = (DefaultTableModel) Tablephancong.getModel();
         model.setRowCount(0);
@@ -351,6 +393,7 @@ public class PanelInstructor extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tablephancong;
+    private javax.swing.JButton btnDetailsView;
     private javax.swing.JButton btnReload;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;
