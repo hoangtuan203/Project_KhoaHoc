@@ -8,6 +8,7 @@ import DTO.StudentGradeDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -42,10 +43,11 @@ public class StudentGradeDAL {
         }
     }
     
-    public ArrayList<StudentGradeDTO> GetDataQuerySG(String query) {
+    public ArrayList<StudentGradeDTO> GetDataSearchSG(String query) {
         arrSG = new ArrayList<StudentGradeDTO>();
         try {
-            String sql = "select * from studentgrade where EnrollmentID = " + query + " or CourseID = " + query + " or StudentID = " + query;
+            String sql = "select * from studentgrade where EnrollmentID = " + query + " or CourseID = " + query + " "
+                    + "or StudentID = " + query;
             PreparedStatement stmt = DatabaseConnect.c.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -60,6 +62,34 @@ public class StudentGradeDAL {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    
+    public void updateDeleteDB(int id, int gr) {
+        Connection con = DatabaseConnect.getConnection();
+        try {
+            String sql = "update studentgrade set Grade = ? where EnrollmentID = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, gr);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void updateEditDB(float gr, int ...list) {
+        Connection con = DatabaseConnect.getConnection();
+        try {
+            String sql = "update studentgrade set CourseID = ? ,StudentID = ? ,Grade = ? where EnrollmentID = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, list[1]);
+            ps.setInt(2, list[2]);
+            ps.setFloat(3, gr);
+            ps.setInt(4, list[0]);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
