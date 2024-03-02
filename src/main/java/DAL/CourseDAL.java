@@ -268,16 +268,34 @@ public class CourseDAL extends DatabaseConnect{
         int result = p.executeUpdate();
         return result;
     }
+    public boolean getCourseInstructor(int courseID )throws SQLException {
+        String query = "SELECT * FROM courseinstructor WHERE CourseID = ?" ;
+        PreparedStatement p =CourseDAL.getConnection().prepareStatement(query);
+        p.setInt(1, courseID);
+        ResultSet rs = p.executeQuery();
+        
+        return rs.next();
+    }
+    public boolean getStudentGrade(int courseID )throws SQLException {
+        String query = "SELECT * FROM StudentGrade WHERE CourseID = ?" ;
+        PreparedStatement p =CourseDAL.getConnection().prepareStatement(query);
+        p.setInt(1, courseID);
+        ResultSet rs = p.executeQuery();
+        
+        return rs.next();
+    }
     
     public int deleteCourse(int courseID) throws SQLException {
-        String query = "DELETE FROM Course WHERE CourseID = ?";
-        PreparedStatement p = CourseDAL.getConnection().prepareStatement(query);
-        p.setInt(1, courseID);
-        int result = p.executeUpdate();
+        if (getCourseInstructor(courseID) || getStudentGrade(courseID ))
+            return 0;
+        else{
+            String query = "DELETE FROM Course WHERE CourseID = ?";
+            PreparedStatement p = CourseDAL.getConnection().prepareStatement(query);
+            p.setInt(1, courseID);
+            int result = p.executeUpdate();
+            return result;
+        }
         
-        
-
-        return result;
     }
     public int deleteCourseOnline(int courseID) throws SQLException{
         String query = "DELETE FROM onlinecourse WHERE CourseID = ?";

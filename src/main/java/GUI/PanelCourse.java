@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
  * @author ASUS
  */
 public class PanelCourse extends javax.swing.JPanel implements ActionListener{
+    int check = 0;
     CourseBUS courseBUS = new CourseBUS();
     DefaultTableModel model ;
     /**
@@ -49,8 +50,13 @@ public class PanelCourse extends javax.swing.JPanel implements ActionListener{
             });
             btnDelete.addActionListener((e) -> {
                 try {
-                    delete();
-                   
+                    check = delete();
+                    if (check != 0){
+                        JOptionPane.showMessageDialog(null, "Xóa khóa học thành công!");
+                    }else {
+                        JOptionPane.showMessageDialog(null, "Đây là khóa học đã được phân công hoặc đã có kết quả khóa học", "Xóa khóa học thất bại!", JOptionPane.PLAIN_MESSAGE);
+                    }
+                   check = 0;
                     
                 } catch (SQLException ex) {
                     Logger.getLogger(PanelCourse.class.getName()).log(Level.SEVERE, null, ex);
@@ -163,7 +169,7 @@ public class PanelCourse extends javax.swing.JPanel implements ActionListener{
 
         btnDelete.setText("Xóa Khóa Học");
 
-        btnUpdate.setText("Sửa Khóa Học");
+        btnUpdate.setText("Cập Nhật Khóa Học");
 
         btnReset.setText("Làm mới");
 
@@ -177,8 +183,8 @@ public class PanelCourse extends javax.swing.JPanel implements ActionListener{
                 .addGap(30, 30, 30)
                 .addComponent(btnAddCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
-                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addComponent(btnUpdate)
+                .addGap(30, 30, 30)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -351,7 +357,8 @@ private DefaultTableModel convertCourse(List list) {
         }
         
     }
- public void delete() throws SQLException{
+ public int delete() throws SQLException{
+     int check = 0;
      int selectedRow = tbCourse.getSelectedRow();
      if(selectedRow != -1){
           int option = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa khóa học này không?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
@@ -362,18 +369,27 @@ private DefaultTableModel convertCourse(List list) {
          String type = String.valueOf(value2);
          
          if(type == "Online"){
-             courseBUS.deleteCourseOnline(Integer.parseInt(value+""));
+             check = courseBUS.deleteCourseOnline(Integer.parseInt(value+""));
+             if (check != 0)
+                model.removeRow(selectedRow);
+             return check;
+             
              
      }
          else{
-             courseBUS.deleteCourseOnsite(Integer.parseInt(value+""));
              
+             check = courseBUS.deleteCourseOnsite(Integer.parseInt(value+""));
+             if(check != 0)
+                model.removeRow(selectedRow);
+             return check;
          }
          
-         model.removeRow(selectedRow);
+         
+        
         }
          
      }
+      return check;
  }
  
 

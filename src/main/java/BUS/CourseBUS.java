@@ -86,12 +86,18 @@ CourseDAL courseDal;
     }
 public int deleteCourseOnline(int courseID) throws SQLException{
     int result =courseDal.deleteCourse(courseID);
-    int result2 =courseDal.deleteCourseOnline(courseID);
+    if (result != 0){
+        int result2 =courseDal.deleteCourseOnline(courseID);
+        return result;
+    }
     return result;
 }
 public int deleteCourseOnsite(int courseID) throws SQLException{
     int result =courseDal.deleteCourse(courseID);
-    int result2 =courseDal.deleteCourseOnsite(courseID);
+    if (result != 0) {
+        int result2 =courseDal.deleteCourseOnsite(courseID);
+        return result;
+    }
     return result;
 }
     public static void main(String[] args) {
