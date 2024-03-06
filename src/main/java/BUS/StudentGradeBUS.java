@@ -28,8 +28,8 @@ public class StudentGradeBUS {
         return SGDAL.GetDataSG();
     }
     
-    public ArrayList<StudentGradeDTO> loadDataQuery(String query) {
-        return SGDAL.GetDataQuerySG(query);
+    public ArrayList<StudentGradeDTO> loadDataSearch(String query) {
+        return SGDAL.GetDataSearchSG(query);
     }
     
     public void renderTable(DefaultTableModel model ,int min ,int max) {
@@ -42,6 +42,16 @@ public class StudentGradeBUS {
                 sgdto.get(i).getGrade()});
         }
         renderUpdate(10,0);
+    }
+    
+    public void FirstTable(DefaultTableModel model,JLabel lb) {
+        if(sgdto.size() > 25) {
+            renderTable(model,0,25);
+            lb.setText("1/2");
+        } else {
+            renderTable(model,0,sgdto.size());
+            lb.setText("1/1");
+        }
     }
     
     public void renderPage(DefaultTableModel model,JLabel lb,int hd) {
@@ -90,16 +100,6 @@ public class StudentGradeBUS {
                 break;
             }
         }
-    } 
-    
-    public void FirstTable(DefaultTableModel model,JLabel lb) {
-        if(sgdto.size() > 25) {
-            renderTable(model,0,25);
-            lb.setText("1/2");
-        } else {
-            renderTable(model,0,sgdto.size());
-            lb.setText("1/1");
-        }
     }
     
     public void NextPage(DefaultTableModel model,JLabel lb) {
@@ -142,7 +142,7 @@ public class StudentGradeBUS {
             sgdto = loadData();
             FirstTable(model, lb);
         } else {
-            sgdto = loadDataQuery(value);
+            sgdto = loadDataSearch(value);
             FirstTable(model, lb);
         }
     }
@@ -150,14 +150,16 @@ public class StudentGradeBUS {
     public void delete(DefaultTableModel model ,JLabel lb ,int id) {
         renderUpdate(0,id,0);
         renderPage(model, lb, 2);
+        SGDAL.updateDeleteDB(id,0);
     }
     
     public void edit(float gr ,int ...list) {
         renderUpdate(gr,list[0],list[1],list[2]);
+        SGDAL.updateEditDB(gr,list[0],list[1],list[2]);
     }
     
     public void Search(DefaultTableModel model, JLabel lb,String value) {
-        sgdto = loadDataQuery(value);
+        sgdto = loadDataSearch(value);
         FirstTable(model, lb);
     }
 }

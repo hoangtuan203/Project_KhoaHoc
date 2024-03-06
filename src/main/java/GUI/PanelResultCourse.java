@@ -26,9 +26,7 @@ public class PanelResultCourse extends javax.swing.JPanel {
      */
     public PanelResultCourse() {
         initComponents();
-        SGBUS = new StudentGradeBUS();
-        dtResultGraden = (DefaultTableModel) tbResult.getModel();
-        SGBUS.FirstTable(dtResultGraden,jLabel2);
+        displayTable();
     }
     
 
@@ -191,6 +189,12 @@ public class PanelResultCourse extends javax.swing.JPanel {
 
     //load data table 
 
+    public void displayTable() {
+        SGBUS = new StudentGradeBUS();
+        dtResultGraden = (DefaultTableModel) tbResult.getModel();
+        SGBUS.FirstTable(dtResultGraden,jLabel2);
+    }
+    
     private void swap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swap
         if(evt.getSource() == jComboBox1) {
             int idx = jComboBox1.getSelectedIndex();
@@ -218,26 +222,42 @@ public class PanelResultCourse extends javax.swing.JPanel {
 
     private void del(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_del
         if(tbResult.getSelectedRow() != -1) {
-            int dialogResult = JOptionPane.showConfirmDialog(null, "bạn có muốn xoá dòng đã chọn không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            int dialogResult = JOptionPane.showConfirmDialog(null, "bạn có muốn xoá dòng đã chọn không?", 
+                    "Xác nhận", JOptionPane.YES_NO_OPTION);
             if (dialogResult == JOptionPane.YES_OPTION) {
-                SGBUS.delete(dtResultGraden, jLabel2, (int)tbResult.getValueAt(tbResult.getSelectedRow(), 0));
-               JOptionPane.showMessageDialog(null, "Xoá thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                SGBUS.delete(dtResultGraden, jLabel2, 
+                        (int)tbResult.getValueAt(tbResult.getSelectedRow(), 0));
+               JOptionPane.showMessageDialog(null, "Xoá thành công", 
+                       "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Đã huỷ hành động", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Đã huỷ hành động", 
+                        "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng muốn xoá", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng muốn xoá", 
+                    "Thông báo", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_del
 
     private void editValue(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_editValue
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            String[] rowData = new String[tbResult.getColumnCount()];
-            for (int i = 0; i < tbResult.getColumnCount(); i++) {
-                rowData[i] = String.valueOf(tbResult.getValueAt(tbResult.getSelectedRow(), i));
+            int dialogResult = JOptionPane.showConfirmDialog(null, "bạn có muốn lưu lại không?", 
+                    "Xác nhận", 
+                    JOptionPane.YES_NO_OPTION);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                String[] rowData = new String[tbResult.getColumnCount()];
+                for (int i = 0; i < tbResult.getColumnCount(); i++) {
+                    rowData[i] = String.valueOf(tbResult.getValueAt(tbResult.getSelectedRow(), i));
+                }
+                SGBUS.edit(Float.parseFloat(rowData[3]),Integer.parseInt(rowData[0]), 
+                        Integer.parseInt(rowData[1]), Integer.parseInt(rowData[2]));
+                JOptionPane.showMessageDialog(null, "Lưu thành công", 
+                        "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                SGBUS.renderPage(dtResultGraden, jLabel2, 2);
+                JOptionPane.showMessageDialog(null, "Đã huỷ hành động", 
+                        "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             }
-            SGBUS.edit(Float.parseFloat(rowData[3]),Integer.parseInt(rowData[0]), Integer.parseInt(rowData[1]), Integer.parseInt(rowData[2]));
-            JOptionPane.showMessageDialog(null, "Đã lưu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);  
         }
     }//GEN-LAST:event_editValue
 
